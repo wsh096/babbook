@@ -8,7 +8,8 @@ public enum ReviewStatus {
     CANT_BOOK("리뷰 불가능");
 
     private final String reviewStatus;
-    ReviewStatus(String reviewStatus){
+
+    ReviewStatus(String reviewStatus) {
         this.reviewStatus = reviewStatus;
     }
 

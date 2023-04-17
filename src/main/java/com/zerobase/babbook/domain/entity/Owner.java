@@ -1,5 +1,6 @@
 package com.zerobase.babbook.domain.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,12 +12,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name ="owner")
+@Table(name = "owner")
 public class Owner {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userMail;
+    @Column(unique = true)
+    private String ownerMail;
+    @Column(unique = true)
     private String phone;
     private String password;
+    @Column(unique = true)
+    private String businessNumber;
+    private String partnershipStatus;
 }

@@ -12,7 +12,8 @@ public enum BookStatus {
     CANT_BOOK("예약 불가능");
 
     private final String bookStatus;
-    BookStatus(String bookStatus){
+
+    BookStatus(String bookStatus) {
         this.bookStatus = bookStatus;
     }
 

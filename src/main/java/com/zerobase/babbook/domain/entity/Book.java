@@ -15,7 +15,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @Table(name = "book")
-public class Book extends BaseEntity{
+public class Book extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +25,7 @@ public class Book extends BaseEntity{
     private String bookedTime;
     private String deadline;
     @ManyToOne
-    @JoinColumn(name ="restaurant_id")
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
     @ManyToOne
     @JoinColumn(name = "user_id")

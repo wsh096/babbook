@@ -11,10 +11,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name ="kiosk")
-public class Kiosk extends BaseEntity{
+@Table(name = "kiosk")
+public class Kiosk extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean check;//승인한다. 안한다. 두가지만이 유일.
+    private boolean check;
 }

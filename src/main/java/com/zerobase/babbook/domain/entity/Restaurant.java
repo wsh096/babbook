@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -14,8 +16,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name ="restaurant")
+@Table(name = "restaurant")
 public class Restaurant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,6 +26,9 @@ public class Restaurant {
     private String description;
     private String address;
     private String call;
-    @OneToMany(mappedBy = "restaurant",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
     private List<Book> reservations;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -30,6 +30,7 @@ public class UserService {
         userRepository.save(user);
         return "success";
     }
+
     @Transactional
     public void update(User user) {// 업데이트
         User u = userRepository.findById(user.getId()).get();
@@ -37,10 +38,12 @@ public class UserService {
         u.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         //u.setPhone(user.getPhone()); 번호의 경우, 인증 관련해서 좀 더 고려해 보기.
     }
+
     @Transactional
     public void delete(Long id) {//회원 탈퇴
         userRepository.deleteById(id);
     }
+
     @Transactional// 예약에 관한 부분
     public void book(Book book, Long bookId, CommonDetails user) {
         Restaurant restaurant = new Restaurant();

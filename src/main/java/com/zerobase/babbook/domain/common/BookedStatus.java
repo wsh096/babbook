@@ -8,7 +8,8 @@ public enum BookedStatus {
     BOOKED_NO_USE("예약 끝-미사용");
 
     private final String bookedStatus;
-    BookedStatus(String commonStatus){
+
+    BookedStatus(String commonStatus) {
         this.bookedStatus = commonStatus;
     }
 }
