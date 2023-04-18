@@ -1,5 +1,6 @@
 package com.zerobase.babbook.domain.entity;
 
+import com.zerobase.babbook.domain.form.SignUpForm;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,16 +8,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
 @Entity
 @Table(name = "user")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends BaseEntity {
 
     @Id
@@ -25,16 +29,17 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private String email;
     private String password;
+    private String name;
     @Column(unique = true)
     private String phone;
-    private String role;
 
-    @Builder
-    public User(String email, String password, String phone ,String role) {
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
+    public static User from(SignUpForm form) {
+        return User.builder()
+            .email(form.getEmail())
+            .password(form.getPassword())
+            .name(form.getName())
+            .phone(form.getPhone())
+            .build();
     }
 
 }
