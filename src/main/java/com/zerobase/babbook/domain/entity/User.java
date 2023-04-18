@@ -23,13 +23,11 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    private String userMail;
+    private String email;
     private String password;
     @Column(unique = true)
     private String phone;
+    private String role;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user", cascade = CascadeType.REMOVE)//사용 후 삭제
-    private List<Book> book;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Restaurant> restaurants;
+
 }
