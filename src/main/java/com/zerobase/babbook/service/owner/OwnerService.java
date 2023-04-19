@@ -1,4 +1,4 @@
-package com.zerobase.babbook.service;
+package com.zerobase.babbook.service.owner;
 
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_USER;
 
@@ -29,9 +29,7 @@ public class OwnerService {
                 owner.getPassword().equals(password))
             .findFirst();
     }
-    public boolean isEmailExist(String email){
-        return ownerRepository.findByEmail(email).isPresent();
-    }
+
     @Transactional
     public void update(Owner owner) {// 업데이트
         Owner o = ownerRepository.findById(owner.getId()).get();

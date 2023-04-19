@@ -1,4 +1,4 @@
-package com.zerobase.babbook.service;
+package com.zerobase.babbook.service.user;
 
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_USER;
 
@@ -23,11 +23,6 @@ public class UserService {
     private final UserRepository userRepository;
 
 
-
-
-    public boolean isEmailExist(String email){
-        return userRepository.findByEmail(email).isPresent();
-    }
     @Transactional
     public void update(User user) {// 업데이트
         User u = userRepository.findById(user.getId()).get();
