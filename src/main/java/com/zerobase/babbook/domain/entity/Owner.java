@@ -1,8 +1,7 @@
 package com.zerobase.babbook.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zerobase.babbook.domain.form.SignUpForm;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Owner extends BaseEntity{
+public class Owner extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,30 +31,25 @@ public class Owner extends BaseEntity{
     @Column(unique = true)
     private String email;
     private String name;
+    @JsonIgnore
+    private String password;
     @Column(unique = true)
     private String phone;
-    private String password;
     @Column(unique = true)
     private String businessNumber;
     private boolean partnershipStatus;
+    @OneToMany(mappedBy = "owner")
+    private List<Restaurant> restaurant;
+
     public static Owner from(SignUpForm form) {
         return Owner.builder()
             .email(form.getEmail())
-            .password(form.getPassword())
             .name(form.getName())
+            .password(form.getPassword())
             .phone(form.getPhone())
             .partnershipStatus(false)
             .build();
     }
 
-    @OneToMany(mappedBy = "owner")
-    private Collection<Restaurant> restaurant = new ArrayList<>();
 
-    public Collection<Restaurant> getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Collection<Restaurant> restaurant) {
-        this.restaurant = restaurant;
-    }
 }

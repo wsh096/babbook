@@ -18,14 +18,17 @@ public class RestaurantDto {
     private String description;
     private String address;
     private String phone;
+    private Owner owner;
 
     public static RestaurantDto from(Restaurant restaurant) {
 
         return RestaurantDto.builder()
             .id(restaurant.getId())
             .name(restaurant.getName())
-            .address(restaurant.getAddress())
             .description(restaurant.getDescription())
+            .address(restaurant.getAddress())
+            .phone(restaurant.getPhone())
+            .owner(restaurant.getOwner())
             .build();
     }
 }

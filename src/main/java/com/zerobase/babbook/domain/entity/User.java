@@ -1,5 +1,6 @@
 package com.zerobase.babbook.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zerobase.babbook.domain.form.SignUpForm;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +28,7 @@ public class User extends BaseEntity {
     private Long id;
     @Column(unique = true)
     private String email;
+    @JsonIgnore
     private String password;
     private String name;
     @Column(unique = true)

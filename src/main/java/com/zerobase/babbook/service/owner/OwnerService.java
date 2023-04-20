@@ -1,14 +1,8 @@
 package com.zerobase.babbook.service.owner;
 
-import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_USER;
-
 import com.zerobase.babbook.domain.common.UserRole;
 import com.zerobase.babbook.domain.entity.Owner;
-import com.zerobase.babbook.domain.entity.User;
-import com.zerobase.babbook.domain.form.SignInForm;
-import com.zerobase.babbook.domain.form.SignUpForm;
 import com.zerobase.babbook.domain.reprository.OwnerRepository;
-import com.zerobase.babbook.exception.CustomException;
 import com.zerobase.babbook.token.JwtAuthenticationProvider;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
