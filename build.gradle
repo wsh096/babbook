@@ -36,9 +36,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'io.springfox:springfox-swagger-ui'
+//    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+//    implementation 'org.apache.commons:commons-lang3:3.12.0'
+//    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 }
 
 dependencyManagement {

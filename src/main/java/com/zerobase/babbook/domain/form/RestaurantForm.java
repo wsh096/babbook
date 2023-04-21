@@ -13,7 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RestaurantForm {
     private String name;
-    private String address;
     private String description;
+    private String businessNumber;
+    private String address;
     private String phone;
+
 }

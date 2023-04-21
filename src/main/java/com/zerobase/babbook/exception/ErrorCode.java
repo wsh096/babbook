@@ -15,6 +15,8 @@ public enum ErrorCode {
 
     //Restaurant 관련
     NOT_FOUND_RESTAURANT(HttpStatus.BAD_REQUEST, "존재하지 않는 식당입니다."),
+    ALREADY_REGISTER_RESTAURANT(HttpStatus.BAD_REQUEST, "이미 등록된 식당입니다."),
+    DO_NOT_CORRECT_ACCESS(HttpStatus.BAD_REQUEST, "등록하신 분이 아닙니다. 비정상적인 접근입니다."),
     EXCEPTION_EXAMPLE(HttpStatus.BAD_REQUEST, "예시");
     private final HttpStatus httpStatus;
     private final String detail;
