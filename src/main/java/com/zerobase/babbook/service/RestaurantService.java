@@ -36,7 +36,8 @@ public class RestaurantService {
     }
 }
     private Restaurant add(RestaurantForm form,Long ownerId) {
-        return restaurantRepository.save(Restaurant.of(form,ownerId));
+        Owner owner = ownerRepository.findById(ownerId).get();
+        return restaurantRepository.save(Restaurant.of(form,owner));
     }
     private boolean isBusinessNumberExist(String businessNumber) {
         return restaurantRepository.findByBusinessNumber(businessNumber).isPresent();
@@ -54,9 +55,13 @@ public class RestaurantService {
         if(!restaurant.equals(check)){//불일치
             throw new CustomException(DO_NOT_CORRECT_ACCESS);
         }else{
-            restaurantRepository.save(Restaurant.of(form,ownerId));
-            return "정상적으로 수정 되었습니다.";
+            restaurant = update(form, ownerId);
+            return " 정상적으로 수정 되었습니다.";
         }
+    }
+    private Restaurant update(RestaurantForm form,Long ownerId) {
+        Owner owner = ownerRepository.findById(ownerId).get();
+        return restaurantRepository.save(Restaurant.of(form,owner));
     }
     //레스토랑 삭제
 

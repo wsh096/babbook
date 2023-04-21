@@ -27,6 +27,7 @@ public class Owner extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "owner_id")
     private Long id;
     @Column(unique = true)
     private String email;
@@ -37,7 +38,6 @@ public class Owner extends BaseEntity {
     private String phone;
     @Column(unique = true)
     private String businessNumber;
-    private boolean partnershipStatus;
     @OneToMany(mappedBy = "owner")
     private List<Restaurant> restaurant;
 
@@ -47,7 +47,6 @@ public class Owner extends BaseEntity {
             .name(form.getName())
             .password(form.getPassword())
             .phone(form.getPhone())
-            .partnershipStatus(false)
             .build();
     }
 

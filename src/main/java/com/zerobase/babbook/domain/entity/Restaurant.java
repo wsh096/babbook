@@ -33,20 +33,20 @@ public class Restaurant extends BaseEntity{
     private String name;
     @Column(length = 500)
     private String description;
-    private Long oId;
+    @ManyToOne
+    private Owner owner;
     private String businessNumber;
     private String address;
     private String phone;
-    @ManyToOne
-    private Owner owner;
-    public static Restaurant of(RestaurantForm form,Long ownerId) {
+
+    public static Restaurant of(RestaurantForm form,Owner owner) {
         return Restaurant.builder()
             .name(form.getName())
             .businessNumber(form.getBusinessNumber())
             .description(form.getDescription())
             .address(form.getAddress())
             .phone(form.getPhone())
-            .oId(ownerId)
+            .owner(owner)
             .build();
     }
 }
