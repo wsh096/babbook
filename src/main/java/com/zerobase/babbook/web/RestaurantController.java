@@ -32,18 +32,18 @@ public class RestaurantController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addRestaurant(@RequestBody RestaurantForm form, @RequestParam Owner owner) {
-        return ResponseEntity.ok(restaurantService.addRestaurant(form, owner));
+    public ResponseEntity<?> addRestaurant(@RequestBody RestaurantForm form, @RequestParam Long ownerId) {
+        return ResponseEntity.ok(restaurantService.addRestaurant(form, ownerId));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateRestaurant(@RequestBody RestaurantForm form, @RequestParam Owner owner) {
-        return ResponseEntity.ok(restaurantService.updateRestaurant(form, owner));
+    public ResponseEntity<?> updateRestaurant(@RequestBody RestaurantForm form, @RequestParam Long ownerId) {
+        return ResponseEntity.ok(restaurantService.updateRestaurant(form, ownerId));
     }
 
     @DeleteMapping("/delete/{restaurantId}")
-    public ResponseEntity<?> deleteRestaurant(@PathVariable Long restaurantId,@RequestParam Owner owner) {
-        return ResponseEntity.ok(restaurantService.delete(restaurantId, owner));
+    public ResponseEntity<?> deleteRestaurant(@PathVariable Long restaurantId,@RequestParam Long ownerId) {
+        return ResponseEntity.ok(restaurantService.delete(restaurantId,ownerId));
     }
 
 }
