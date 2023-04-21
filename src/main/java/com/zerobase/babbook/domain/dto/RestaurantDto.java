@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 /*
-* 해당 부분은 데이터를 가지고 조회하는 용도로 사용.
-* 구체적인 데이터에서 이름, 설명, 주소, 번호만 보이면 되기 때문에, 해당 부분만 구현
-*
-* 리스트 페이지는 적은 데이터만 가져오면 되기 때문에 null 값이 들어가는 형태가 되긴 하지만 List 로 만들어 구현
-* */
+ * 해당 부분은 데이터를 가지고 조회하는 용도로 사용.
+ * 구체적인 데이터에서 이름, 설명, 주소, 번호만 보이면 되기 때문에, 해당 부분만 구현
+ *
+ * 리스트 페이지는 적은 데이터만 가져오면 되기 때문에 null 값이 들어가는 형태가 되긴 하지만 List 로 만들어 구현
+ * */
 public class RestaurantDto {
 
 
@@ -27,7 +27,7 @@ public class RestaurantDto {
     private String address;
     private String phone;
 
-//해당 부분은 데이터를 가지고 조회하는 용도로 사용.
+    //해당 부분은 데이터를 가지고 조회하는 용도로 사용.
 //구체적인 데이터에서 이름, 설명, 주소, 번호만 보이면 되기 때문에, 해당 부분만 구현
     public static RestaurantDto from(Restaurant restaurant) {
 
@@ -38,11 +38,13 @@ public class RestaurantDto {
             .phone(restaurant.getPhone())
             .build();
     }
+
     //리스트 페이지는 적은 데이터만 가져오면 되기 때문에 null 값이 들어가는 형태가 되긴 하지만 List 로 만들어 구현
     public static List<RestaurantDto> fromList(List<Restaurant> restaurant) {
         List<RestaurantDto> restaurantList = new ArrayList<>();
-        int size = Math.min(1000, restaurant.size());//우선 최대 1000개까지만 너무 많은 데이터가 들어가지 않게//이후 페이지 처리 부분 만들어 해결하기.
-        for(int i = 0; i < size; i ++){
+        int size = Math.min(1000,
+            restaurant.size());//우선 최대 1000개까지만 너무 많은 데이터가 들어가지 않게//이후 페이지 처리 부분 만들어 해결하기.
+        for (int i = 0; i < size; i++) {
             Restaurant eachRestaurant = restaurant.get(i);
             RestaurantDto eachRestaurantDto = RestaurantDto.builder()
                 .name(eachRestaurant.getName())
@@ -52,5 +54,16 @@ public class RestaurantDto {
             restaurantList.add(eachRestaurantDto);
         }
         return restaurantList;
+    }
+
+    public static List<String> nameList(List<Restaurant> restaurant) {
+        List<String> restaurantNameList = new ArrayList<>();
+        int size = Math.min(1000,
+            restaurant.size());//우선 최대 1000개까지만 너무 많은 데이터가 들어가지 않게//이후 페이지 처리 부분 만들어 해결하기.
+        for (int i = 0; i < size; i++) {
+            restaurantNameList.add(restaurant.get(i).getName());
+        }
+
+        return restaurantNameList;
     }
 }

@@ -30,8 +30,12 @@ public class RestaurantController {
     public ResponseEntity<?> getRestaurant() {
         return ResponseEntity.ok().body(RestaurantDto.fromList(restaurantService.restaurantList()));
     }
-
-    @GetMapping("/{restaurantId}")
+    @GetMapping("search/{restaurantName}")
+    public ResponseEntity<?> getRestaurantDetail(@PathVariable String restaurantName) {
+        return ResponseEntity.ok()
+            .body(RestaurantDto.nameList(restaurantService.restaurantNameSearch(restaurantName)));
+    }
+    @GetMapping("detail/{restaurantId}")
     public ResponseEntity<?> getRestaurantDetail(@PathVariable Long restaurantId) {
         return ResponseEntity.ok()
             .body(RestaurantDto.from(restaurantService.restaurantDetail(restaurantId)));
