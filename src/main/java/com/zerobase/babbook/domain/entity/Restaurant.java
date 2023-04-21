@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -29,12 +30,14 @@ public class Restaurant extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @ManyToOne
+    private Owner owner;
+    @OneToMany(mappedBy = "restaurant")
+    private List<Book> books;
     private String name;
     @Column(length = 500)
     private String description;
-    @ManyToOne
-    private Owner owner;
+
     private String businessNumber;
     private String address;
     private String phone;

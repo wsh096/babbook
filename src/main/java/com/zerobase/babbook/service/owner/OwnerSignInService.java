@@ -1,6 +1,6 @@
 package com.zerobase.babbook.service.owner;
 
-import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_USER;
+import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_OWNER;
 
 import com.zerobase.babbook.domain.common.UserRole;
 import com.zerobase.babbook.domain.entity.Owner;
@@ -21,7 +21,7 @@ public class OwnerSignInService {
     private static final UserRole OWNER = UserRole.OWNER;
 
     public String ownerLoginToken(SignInForm form) {
-        Owner owner = validateSignIn(form).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        Owner owner = validateSignIn(form).orElseThrow(() -> new CustomException(NOT_FOUND_OWNER));
         return provider.createToken(owner.getEmail(), owner.getId(), OWNER);
     }
 
