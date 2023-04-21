@@ -38,6 +38,7 @@ public class Owner extends BaseEntity {
     private String phone;
     @Column(unique = true)
     private String businessNumber;
+    private boolean partnership;
     @OneToMany(mappedBy = "owner")
     private List<Restaurant> restaurant;
 
@@ -47,6 +48,7 @@ public class Owner extends BaseEntity {
             .name(form.getName())
             .password(form.getPassword())
             .phone(form.getPhone())
+            .partnership(false)//따로 승인 조건 없음. 해당 부분 가입과 동시에 바뀌게 만들기.
             .build();
     }
 

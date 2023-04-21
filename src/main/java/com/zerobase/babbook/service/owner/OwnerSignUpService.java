@@ -18,6 +18,8 @@ public class OwnerSignUpService {
             throw new CustomException(ALREADY_REGISTER_USER);
         } else {
             Owner owner = signUp(form);
+            owner.setPartnership(true);
+            ownerRepository.save(owner); //따로 승인 조건이 없기 때문에 위와 같이 기본값을 변경하는 수준으로만 구현.
             return "회원 가입에 성공하였습니다.";
         }
     }
