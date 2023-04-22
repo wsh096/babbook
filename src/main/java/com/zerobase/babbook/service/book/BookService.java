@@ -3,18 +3,20 @@ package com.zerobase.babbook.service.book;
 import static com.zerobase.babbook.domain.common.BookCode.AUTO_CANCEL_BOOK;
 import static com.zerobase.babbook.domain.common.BookCode.OWNER_ACCEPT_BOOK;
 import static com.zerobase.babbook.domain.common.BookCode.OWNER_REJECT_BOOK;
+import static com.zerobase.babbook.domain.common.BookCode.TIMEOUT_CANCEL_BOOK;
+import static com.zerobase.babbook.domain.common.BookCode.USER_CANCEL_BOOK;
 import static com.zerobase.babbook.domain.common.BookCode.USER_WAIT_BOOK;
 import static com.zerobase.babbook.domain.common.OwnerAdmit.ACCEPT;
+import static com.zerobase.babbook.exception.ErrorCode.ALREADY_CANCEL_BOOK;
 import static com.zerobase.babbook.exception.ErrorCode.BAD_ACCESS_TIME;
 import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_ACCESS_BOOK_TIME;
-import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_CORRECT_ACCESS;
+import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_CORRECT_BOOK_CANCEL;
 import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_CORRECT_BOOK_RESPONSE;
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_BOOK;
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_OWNER;
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_RESTAURANT;
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_USER;
 
-import com.zerobase.babbook.domain.common.BookCode;
 import com.zerobase.babbook.domain.common.OwnerAdmit;
 import com.zerobase.babbook.domain.dto.UserDto;
 import com.zerobase.babbook.domain.entity.Book;
@@ -27,16 +29,10 @@ import com.zerobase.babbook.domain.reprository.OwnerRepository;
 import com.zerobase.babbook.domain.reprository.RestaurantRepository;
 import com.zerobase.babbook.domain.reprository.UserRepository;
 import com.zerobase.babbook.exception.CustomException;
-import com.zerobase.babbook.exception.ErrorCode;
 import com.zerobase.babbook.token.JwtAuthenticationProvider;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -95,7 +91,6 @@ public class BookService {
             bookRepository.save(book);
             throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
         }
-
         //잘못된 요청의 경우
         if (ownerAdmit.getCode().equals(null)) {
             throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
@@ -107,8 +102,9 @@ public class BookService {
             return "예약이 거절 되었습니다.";
         }
     }
+
     private void acceptResponse(Book book) {
-        book.setBookCode(OWNER_ACCEPT_BOOK);
+        book.setBookCode(OWNER_ACCEPT_BOOK);//예약 중인 상태.
         bookRepository.save(book);
     }
 
@@ -116,41 +112,28 @@ public class BookService {
         book.setBookCode(OWNER_REJECT_BOOK);
         bookRepository.save(book);
     }
-        Restaurant restaurant = restaurantRepository.findById(restaurantId)
-            .orElseThrow(() -> new CustomException(NOT_FOUND_RESTAURANT));
-        Book book = Book.builder()
-            .createdBookTime(bookTime)
-            .deadLineTime(bookTime.minusMinutes(10))
-            .user(user)
-            .restaurant(restaurant)
-            .bookCode(USER_WAIT_BOOK)
-            .build();
-        String name = restaurant.getName();
-        return name + " 으로 예약 요청이 정상적으로 전송되었습니다.";
-    }
 
+    public String cancelBook(String token, Long bookId) {
+        UserDto userCheck = provider.getUserDto(token);
+        User user = userRepository.findById(userCheck.getId())
+            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        Book book = bookRepository.findById(bookId)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_BOOK));
 
-
-    public List<Book> findByUserid(Long userId) {
-        return bookRepository.findByUser_id(userId);
-    }
-
-    public Page<Book> findByUserid(Pageable pageable, Long uid) {
-        Page<Book> lists = bookRepository.findByUser_id(pageable, uid);
-        return lists;
-    }
-
-    public Book findBook(Long bookId) {
-        return bookRepository.findById(bookId).get();
-    }
-
-    @Transactional
-    public void updateBook(Book b) throws ParseException {
-        Book book = bookRepository.findById(b.getId()).get();
+        //이미 취소 된 예약번호는 취소할 수 없음
+        if (book.getBookCode().equals(TIMEOUT_CANCEL_BOOK) ||
+            book.getBookCode().equals(AUTO_CANCEL_BOOK)) {
+            throw new CustomException(ALREADY_CANCEL_BOOK);
+        }
+        //예약자와 book 의 유저의 일치 여부 확인
+        if (!user.equals(book.getUser())) {
+            throw new CustomException(DO_NOT_CORRECT_BOOK_CANCEL);
+        }
+        //이제 취소가 가능한 상태.
+        book.setBookCode(USER_CANCEL_BOOK);
         bookRepository.save(book);
+        return "예약이 정상적으로 취소되었습니다.";
     }
 
-    public void cancelBook(Long bookId) {
-        bookRepository.deleteById(bookId);
-    }
+
 }

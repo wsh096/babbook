@@ -5,6 +5,7 @@ import com.zerobase.babbook.domain.form.BookForm;
 import com.zerobase.babbook.service.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,11 +37,26 @@ public class BookController {
         @PathVariable(name = "book_id") Long bookId, @RequestBody OwnerAdmit ownerAdmit) {
         return ResponseEntity.ok().body(bookService.responseBook(token,bookId,ownerAdmit));
     }
-    //예약 전송
-    @PostMapping("/send/{restaurant_id}")
-    public ResponseEntity<?> getBook(@RequestHeader(name = TOKEN) String token,
-        @PathVariable(name = "restaurant_id") Long restaurantId,
-        @RequestBody BookForm form) {
-        return ResponseEntity.ok().body(bookService.sendBook(token, restaurantId, form));
+
+    //유저의 예약 취소.USER_CANCEL_BOOK("유저 예약 취소"),
+    @PostMapping("/cancel/{book_id}")
+    public ResponseEntity<?> cancelBook(@RequestHeader(name = TOKEN) String token,
+        @PathVariable(name = "book_id") Long bookId) {
+        return ResponseEntity.ok().body(bookService.cancelBook(token, bookId));
     }
+    //유저의 예약 내역 확인//userController에 넣을지, 예약 내역에 넣어야 할지 참 애매한 상황.
+    // common으로 따로 빼는 것도 고려(MainPage에 조회 검색, 유저의 예약 내역 확인과 같은 페이지 만들기
+
+    //아래의 값의 경우 데드라인의 확인이 필요
+    @GetMapping("/find/{bookId}")
+    public ResponseEntity<?> getBookDetail(@PathVariable(name = "book_id") Long bookId) {
+        return ResponseEntity.ok().body(bookService.getBookDetail(bookId));
+    }
+    @GetMapping("/List")
+    public ResponseEntity<?> cancelBook(@RequestHeader(name = TOKEN) String token,
+        @PathVariable(name = "book_id") Long bookId) {
+        return ResponseEntity.ok().body(bookService.MybookList(token));
+    }
+
+
 }

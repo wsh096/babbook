@@ -27,9 +27,12 @@ public enum ErrorCode {
     BAD_ACCESS_TIME(HttpStatus.BAD_REQUEST, "현재 시간보다 이전은 예약할 수 없습니다. 현재 시간 보다 30분 이후의 시간부터 예약이 가능합니다."),
     DO_NOT_ACCESS_BOOK_TIME(HttpStatus.BAD_REQUEST, "현재 시간 보다 30분 이전은 예약할 수 없습니다. 현재 시간 보다 30분 이후의 시간부터 예약이 가능합니다."),
     DO_NOT_CORRECT_BOOK_RESPONSE(HttpStatus.BAD_REQUEST, "예약에 관한 적절한 응답이 아닙니다. 승인 또는 거절을 선택해 주십시오."),
-    DO_NOT_CORRECT_BOOK_RESPONSE(HttpStatus.BAD_REQUEST, "예약에 관한 적절한 응답이 아닙니다. 승인 또는 거절을 선택해 주십시오."),
-    DO_NOT_ACCESS_BOOK_TIME(HttpStatus.BAD_REQUEST, " 비정상적인 접근입니다."),
-    EXCEPTION_EXAMPLE(HttpStatus.BAD_REQUEST, "끝맺는 예시");
+    EXCEPTION_EXAMPLE(HttpStatus.BAD_REQUEST, "예약에 관한 적절한 응답이 아닙니다. 승인 또는 거절을 선택해 주십시오."),
+    DO_NOT_CORRECT_BOOK_CANCEL(HttpStatus.BAD_REQUEST, "예약자가 아니기 때문에 취소할 수 없습니다."),
+    ALREADY_CANCEL_BOOK(HttpStatus.BAD_REQUEST, "해당 예약은 이미 취소된 예약입니다."),
+    NOT_BOOK_IS_DO_NOT_ALLOW_CANCEL(HttpStatus.BAD_REQUEST, "해당 예약은 "),
+    EXAMPLE(HttpStatus.BAD_REQUEST, " 비정상적인 접근입니다."),
+    EXCEPTION_SAMMPLE(HttpStatus.BAD_REQUEST, "끝맺는 예시");
     private final HttpStatus httpStatus;
     private final String detail;
 }
