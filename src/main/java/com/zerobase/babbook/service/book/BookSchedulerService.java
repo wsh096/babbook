@@ -1,6 +1,5 @@
 package com.zerobase.babbook.service.book;
 
-import static com.zerobase.babbook.domain.common.BookCode.BOOKING;
 import static com.zerobase.babbook.domain.common.BookCode.OWNER_ACCEPT_BOOK;
 import static com.zerobase.babbook.domain.common.BookCode.TIMEOUT_CANCEL_BOOK;
 
