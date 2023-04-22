@@ -53,9 +53,8 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.getBookDetail(bookId));
     }
     @GetMapping("/List")
-    public ResponseEntity<?> cancelBook(@RequestHeader(name = TOKEN) String token,
-        @PathVariable(name = "book_id") Long bookId) {
-        return ResponseEntity.ok().body(bookService.MybookList(token));
+    public ResponseEntity<?> mybookList(@RequestHeader(name = TOKEN) String token) {
+        return ResponseEntity.ok().body(bookService.mybookList(token));
     }
 
 

@@ -32,6 +32,7 @@ import com.zerobase.babbook.exception.CustomException;
 import com.zerobase.babbook.token.JwtAuthenticationProvider;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +53,7 @@ public class BookService {
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
         LocalDateTime nowTime = LocalDateTime.now();
         LocalDateTime bookTime = LocalDateTime.parse(form.getBookTime(),
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         //fast fail
         if (bookTime.isBefore(nowTime)) {
             throw new CustomException(BAD_ACCESS_TIME);
@@ -135,5 +136,17 @@ public class BookService {
         return "예약이 정상적으로 취소되었습니다.";
     }
 
-
+    //하나의 특정 예약의 정보를 확인.
+    public Book getBookDetail(Long bookId) {
+        return bookRepository.findById(bookId)
+            .orElseThrow(()-> new CustomException(NOT_FOUND_BOOK));
+    }
+    //유저 자신이 예약 내역 전체를 확인
+    //심플하게 List를 간소화해서 보여주는 작업이 가능할 것으로 보임
+    public List<Book> mybookList(String token) {
+        UserDto userCheck = provider.getUserDto(token);
+        User user = userRepository
+            .findById(userCheck.getId()).orElseThrow(()-> new CustomException(NOT_FOUND_USER));
+        return user.getBook();
+    }
 }

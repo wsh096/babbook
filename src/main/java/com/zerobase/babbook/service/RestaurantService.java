@@ -110,9 +110,7 @@ public class RestaurantService {
     //    검색 like 와 같이 유사한 것까지 검색 되게 하고 싶으나 식당 이름을 상세하게 안다는 전제하에 진행.
     //    단, 같은 이름의 식당이 있을 수 있으므로 리스트로 반환.
     public List<Restaurant> restaurantNameSearch(String name) {
-        List<Restaurant> restaurants = restaurantRepository
+        return restaurantRepository
             .findAllByName(name).orElseThrow(() -> new CustomException(NOT_FOUND_RESTAURANT));
-
-        return restaurants;
     }
 }
