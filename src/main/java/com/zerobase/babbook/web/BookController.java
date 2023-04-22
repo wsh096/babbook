@@ -1,6 +1,7 @@
 package com.zerobase.babbook.web;
 
 import com.zerobase.babbook.domain.common.OwnerAdmit;
+import com.zerobase.babbook.domain.dto.BookDto;
 import com.zerobase.babbook.domain.form.BookForm;
 import com.zerobase.babbook.service.book.BookService;
 import lombok.RequiredArgsConstructor;
@@ -48,13 +49,13 @@ public class BookController {
     // common으로 따로 빼는 것도 고려(MainPage에 조회 검색, 유저의 예약 내역 확인과 같은 페이지 만들기
 
     //아래의 값의 경우 데드라인의 확인이 필요
-    @GetMapping("/find/{bookId}")
+    @GetMapping("/find/{book_id}")
     public ResponseEntity<?> getBookDetail(@PathVariable(name = "book_id") Long bookId) {
-        return ResponseEntity.ok().body(bookService.getBookDetail(bookId));
+        return ResponseEntity.ok().body(BookDto.from(bookService.getBookDetail(bookId)));
     }
     @GetMapping("/List")
-    public ResponseEntity<?> mybookList(@RequestHeader(name = TOKEN) String token) {
-        return ResponseEntity.ok().body(bookService.mybookList(token));
+    public ResponseEntity<?> myBookList(@RequestHeader(name = TOKEN) String token) {
+        return ResponseEntity.ok().body(BookDto.myBookList(bookService.mybookList(token)));
     }
 
 
