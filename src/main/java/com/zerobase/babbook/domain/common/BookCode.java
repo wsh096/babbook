@@ -12,7 +12,8 @@ public enum BookCode implements EnumMapperType {
     OWNER_ACCEPT_BOOK("점주 예약 승인"),
     OWNER_REJECT_BOOK("점주 예약 거절"),
     USER_CANCEL_BOOK("유저 예약 취소"),
-    AUTO_CANCEL_BOOK("예약 자동 취소");
+    AUTO_CANCEL_BOOK("예약 자동 취소"),
+    TIMEOUT_CANCEL_BOOK("시간 초과 취소");
 
     private String bookCode;
 

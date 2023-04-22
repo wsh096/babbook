@@ -2,7 +2,7 @@ package com.zerobase.babbook.web;
 
 import com.zerobase.babbook.domain.common.OwnerAdmit;
 import com.zerobase.babbook.domain.form.BookForm;
-import com.zerobase.babbook.service.BookService;
+import com.zerobase.babbook.service.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,12 +29,12 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.requestBook(token, restaurantId, form));
     }
     //예약 요청 응답(response)
-    //owner의 token으로 확인(owner 토큰인지는 service에서 확인,
+    //owner token 으로 확인_owner 토큰인지는 service 에서 확인
     // (아무나 처리 가능하면 안 되기 때문.)
     @PostMapping("/response/{book_id}")
     public ResponseEntity<?> getBook(@RequestHeader(name = TOKEN) String token,
         @PathVariable(name = "book_id") Long bookId, @RequestBody OwnerAdmit ownerAdmit) {
-        return ResponseEntity.ok().body(token,bookService.responseBook(token,bookId,ownerAdmit));
+        return ResponseEntity.ok().body(bookService.responseBook(token,bookId,ownerAdmit));
     }
     //예약 전송
     @PostMapping("/send/{restaurant_id}")
