@@ -52,7 +52,7 @@ public class RestaurantController {
         @RequestBody RestaurantForm form) {
         return ResponseEntity.ok(restaurantService.updateRestaurant(token, form));
     }
-
+    //제대로 삭제 안 되고 있음 TODO
     @DeleteMapping("/delete/{restaurantId}")
     public ResponseEntity<?> deleteRestaurant(@RequestHeader(name = TOKEN) String token,
         @PathVariable Long restaurantId) {

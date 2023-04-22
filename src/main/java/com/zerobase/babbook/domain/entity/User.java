@@ -3,6 +3,7 @@ package com.zerobase.babbook.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zerobase.babbook.domain.form.SignUpForm;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class User extends BaseEntity {
     private String name;
     @Column(unique = true)
     private String phone;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Book> book;
 
     public static User from(SignUpForm form) {

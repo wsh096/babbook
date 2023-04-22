@@ -7,11 +7,13 @@ import static com.zerobase.babbook.domain.common.BookCode.TIMEOUT_CANCEL_BOOK;
 import static com.zerobase.babbook.domain.common.BookCode.USER_CANCEL_BOOK;
 import static com.zerobase.babbook.domain.common.BookCode.USER_WAIT_BOOK;
 import static com.zerobase.babbook.domain.common.OwnerAdmit.ACCEPT;
+import static com.zerobase.babbook.domain.common.OwnerAdmit.REJECT;
 import static com.zerobase.babbook.exception.ErrorCode.ALREADY_CANCEL_BOOK;
 import static com.zerobase.babbook.exception.ErrorCode.BAD_ACCESS_TIME;
 import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_ACCESS_BOOK_TIME;
 import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_CORRECT_BOOK_CANCEL;
 import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_CORRECT_BOOK_RESPONSE;
+import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_WAIT_REQUEST;
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_BOOK;
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_OWNER;
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_RESTAURANT;
@@ -92,15 +94,19 @@ public class BookService {
             bookRepository.save(book);
             throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
         }
-        //잘못된 요청의 경우
-        if (ownerAdmit.getCode().equals(null)) {
-            throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
-        } else if (ownerAdmit.getCode().equals(ACCEPT)) {
+        //대기 중인 고객만 아래의 값을 받을 수 있음.
+        if(book.getBookCode()!=USER_WAIT_BOOK){
+            throw new CustomException(DO_NOT_WAIT_REQUEST);
+        }
+
+         if (ownerAdmit == ACCEPT) {
             acceptResponse(book);
             return "성공적으로 승인되었습니다.";
-        } else {//REJECT
+        } else if (ownerAdmit == REJECT) {//REJECT
             rejectResponse(book);
             return "예약이 거절 되었습니다.";
+        } else{
+            throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
         }
     }
 
@@ -139,14 +145,15 @@ public class BookService {
     //하나의 특정 예약의 정보를 확인.
     public Book getBookDetail(Long bookId) {
         return bookRepository.findById(bookId)
-            .orElseThrow(()-> new CustomException(NOT_FOUND_BOOK));
+            .orElseThrow(() -> new CustomException(NOT_FOUND_BOOK));
     }
+
     //유저 자신이 예약 내역 전체를 확인
     //심플하게 List를 간소화해서 보여주는 작업이 가능할 것으로 보임
     public List<Book> mybookList(String token) {
         UserDto userCheck = provider.getUserDto(token);
         User user = userRepository
-            .findById(userCheck.getId()).orElseThrow(()-> new CustomException(NOT_FOUND_USER));
+            .findById(userCheck.getId()).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
         return user.getBook();
     }
 }

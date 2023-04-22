@@ -16,5 +16,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BookForm {
     String bookTime;
-
 }

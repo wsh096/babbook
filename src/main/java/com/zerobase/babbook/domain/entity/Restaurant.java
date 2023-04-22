@@ -1,7 +1,7 @@
 package com.zerobase.babbook.domain.entity;
 
 import com.zerobase.babbook.domain.form.RestaurantForm;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @Entity
@@ -25,7 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Restaurant extends BaseEntity{
+public class Restaurant extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +39,7 @@ public class Restaurant extends BaseEntity{
     @Column(length = 500)
     private String description;
     @Pattern(regexp = "\\d{3}-\\d{2}-\\d{5}", message = "사업자 등록 번호 형식이 유효하지 않습니다.")
-    @ApiModelProperty(value = "사업자 등록 번호 (XXX-XX-XXXXX)", example = "123-45-67890", required = true)
+    @Parameter(description = "사업자 등록 번호 (XXX-XX-XXXXX)", example = "123-45-67890", required = true)
     private String businessNumber;
     private String address;
     private String phone;
