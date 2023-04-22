@@ -41,6 +41,8 @@ public class Owner extends BaseEntity {
     private boolean partnership;
     @OneToMany(mappedBy = "owner")
     private List<Restaurant> restaurant;
+    @OneToMany(mappedBy = "owner")
+    private List<Book> book;
 
     public static Owner from(SignUpForm form) {
         return Owner.builder()

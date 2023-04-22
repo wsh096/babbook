@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum BookCode implements EnumMapperType{
+public enum BookCode implements EnumMapperType {
 
     USER_WAIT_BOOK("예약 진행중"),
     OWNER_ACCEPT_BOOK("점주 예약 승인"),
@@ -19,6 +19,8 @@ public enum BookCode implements EnumMapperType{
     BookCode(String bookCode) {
         this.bookCode = bookCode;
     }
+
+    @Override
     @JsonValue
     public String getCode() {
         return this.bookCode;
