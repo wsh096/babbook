@@ -1,4 +1,4 @@
-package com.zerobase.babbook.service;
+package com.zerobase.babbook.service.review;
 
 import com.zerobase.babbook.domain.entity.Review;
 import com.zerobase.babbook.domain.reprository.ReviewRepository;
