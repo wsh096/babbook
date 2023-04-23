@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zerobase.babbook.domain.form.SignUpForm;
 import com.zerobase.babbook.util.ValidationUtils;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,9 +45,9 @@ public class Owner extends BaseEntity {
     @Column(unique = true)
     private String businessNumber;
     private boolean partnership;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Restaurant> restaurant;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Book> book;
 
     public static Owner from(SignUpForm form) {

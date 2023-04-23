@@ -3,8 +3,10 @@ package com.zerobase.babbook.domain.entity;
 import com.zerobase.babbook.domain.form.RestaurantForm;
 import io.swagger.v3.oas.annotations.Parameter;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,8 +35,10 @@ public class Restaurant extends BaseEntity {
     private Long id;
     @ManyToOne
     private Owner owner;
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Book> books;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<Review> reviews;
     private String name;
     @Column(length = 500)
     private String description;
@@ -43,6 +47,7 @@ public class Restaurant extends BaseEntity {
     private String businessNumber;
     private String address;
     private String phone;
+    private Double averageRate;
 
     public static Restaurant of(RestaurantForm form, Owner owner) {
         return Restaurant.builder()
@@ -54,5 +59,4 @@ public class Restaurant extends BaseEntity {
             .owner(owner)
             .build();
     }
-
 }

@@ -35,11 +35,18 @@ public enum ErrorCode {
     EXAMPLE(HttpStatus.BAD_REQUEST, " 비정상적인 접근입니다."),
 
 
-    //Kiosk 응답
+    //Kiosk
     //조회에서 필요하지 않은 이유는 따로, 해당 내역을 조회한다고 해서 의미가 있는 게 아니기 때문.
     NO_MATCH_BOOK_AND_USER(HttpStatus.BAD_REQUEST, "예약자와 예약내역이 일치하지 않습니다."),
     NO_ACCEPT_BOOK(HttpStatus.BAD_REQUEST, "아직 승인되지 않은 예약은 사용할 수 없습니다."),
     NO_USE_BOOK(HttpStatus.BAD_REQUEST, "해당 예약은 사용되었거나 취소되었기에 사용할 수 없습니다."),
+
+    //Review
+    NOT_FOUND_REVIEW(HttpStatus.BAD_REQUEST, "해당 리뷰가 존재하지 않습니다."),
+    ALREADY_WRITE_REVIEW(HttpStatus.BAD_REQUEST, "해당 리뷰는 이미 작성 완료 되었습니다."),
+    TIME_OVER_WRITE_REVIEW(HttpStatus.BAD_REQUEST, "해당 리뷰는 작성 가능 기한을 넘었습니다."),
+    NO_WRITE_REVIEW(HttpStatus.BAD_REQUEST, "해당 예약 건은 리뷰를 작성할 수 없습니다."),
+    NOT_ALLOW_POINT(HttpStatus.BAD_REQUEST, "리뷰 평점은 0~10점까지 입력 가능합니다."),
     EXCEPTION_SAMMPLE(HttpStatus.BAD_REQUEST, "끝맺는 예시");
     private final HttpStatus httpStatus;
     private final String detail;

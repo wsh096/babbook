@@ -31,10 +31,12 @@ import com.zerobase.babbook.domain.reprository.OwnerRepository;
 import com.zerobase.babbook.domain.reprository.RestaurantRepository;
 import com.zerobase.babbook.domain.reprository.UserRepository;
 import com.zerobase.babbook.exception.CustomException;
+import com.zerobase.babbook.exception.ErrorCode;
 import com.zerobase.babbook.token.JwtAuthenticationProvider;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,7 @@ public class BookService {
     private final RestaurantRepository restaurantRepository;
 
     //예약생성
+    @Transactional
     public String requestBook(String token, Long restaurantId, BookForm form) {
         UserDto userCheck = provider.getUserDto(token);
         User user = userRepository.findById(userCheck.getId())
@@ -79,6 +82,7 @@ public class BookService {
         return name + " 으로 예약 요청이 정상적으로 전송되었습니다.";
     }
 
+    @Transactional
     public String responseBook(String token, Long bookId, OwnerAdmit ownerAdmit) {
         UserDto ownerCheck = provider.getUserDto(token);
         Owner owner = ownerRepository.findById(ownerCheck.getId())
@@ -95,17 +99,17 @@ public class BookService {
             throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
         }
         //대기 중인 고객만 아래의 값을 받을 수 있음.
-        if(book.getStatusCode()!=USER_WAIT_BOOK){
+        if (book.getStatusCode() != USER_WAIT_BOOK) {
             throw new CustomException(DO_NOT_WAIT_REQUEST);
         }
 
-         if (ownerAdmit == ACCEPT) {
+        if (ownerAdmit == ACCEPT) {
             acceptResponse(book);
             return "성공적으로 승인되었습니다.";
         } else if (ownerAdmit == REJECT) {//REJECT
             rejectResponse(book);
             return "예약이 거절 되었습니다.";
-        } else{
+        } else {
             throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
         }
     }
@@ -120,9 +124,10 @@ public class BookService {
         bookRepository.save(book);
     }
 
+    @Transactional
     public String cancelBook(String token, Long bookId) {
-        UserDto userCheck = provider.getUserDto(token);
-        User user = userRepository.findById(userCheck.getId())
+        UserDto userDto = provider.getUserDto(token);
+        User user = userRepository.findById(userDto.getId())
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
         Book book = bookRepository.findById(bookId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_BOOK));
@@ -143,17 +148,20 @@ public class BookService {
     }
 
     //하나의 특정 예약의 정보를 확인.
+
     public Book getBookDetail(Long bookId) {
         return bookRepository.findById(bookId)
-            .orElseThrow(() -> new CustomException(NOT_FOUND_BOOK));
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_BOOK));
     }
 
     //유저 자신이 예약 내역 전체를 확인
     //심플하게 List를 간소화해서 보여주는 작업이 가능할 것으로 보임
+
     public List<Book> mybookList(String token) {
-        UserDto userCheck = provider.getUserDto(token);
+        UserDto userDto = provider.getUserDto(token);
         User user = userRepository
-            .findById(userCheck.getId()).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+            .findById(userDto.getId())
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         return user.getBook();
     }
 }

@@ -1,14 +1,14 @@
 package com.zerobase.babbook.service.owner;
 
-import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_OWNER;
-
 import com.zerobase.babbook.domain.common.UserRole;
 import com.zerobase.babbook.domain.entity.Owner;
 import com.zerobase.babbook.domain.form.SignInForm;
 import com.zerobase.babbook.domain.reprository.OwnerRepository;
 import com.zerobase.babbook.exception.CustomException;
+import com.zerobase.babbook.exception.ErrorCode;
 import com.zerobase.babbook.token.JwtAuthenticationProvider;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,10 @@ public class OwnerSignInService {
     private final OwnerRepository ownerRepository;
     private static final UserRole OWNER = UserRole.OWNER;
 
+    @Transactional
     public String ownerLoginToken(SignInForm form) {
-        Owner owner = validateSignIn(form).orElseThrow(() -> new CustomException(NOT_FOUND_OWNER));
+        Owner owner = validateSignIn(form)
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OWNER));
         return provider.createToken(owner.getEmail(), owner.getId(), OWNER);
     }
 
