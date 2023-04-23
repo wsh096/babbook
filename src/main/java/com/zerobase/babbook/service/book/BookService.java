@@ -1,25 +1,7 @@
 package com.zerobase.babbook.service.book;
 
-import static com.zerobase.babbook.domain.common.OwnerAdmit.ACCEPT;
-import static com.zerobase.babbook.domain.common.OwnerAdmit.REJECT;
-import static com.zerobase.babbook.domain.common.StatusCode.AUTO_CANCEL_BOOK;
-import static com.zerobase.babbook.domain.common.StatusCode.OWNER_ACCEPT_BOOK;
-import static com.zerobase.babbook.domain.common.StatusCode.OWNER_REJECT_BOOK;
-import static com.zerobase.babbook.domain.common.StatusCode.TIMEOUT_CANCEL_BOOK;
-import static com.zerobase.babbook.domain.common.StatusCode.USER_CANCEL_BOOK;
-import static com.zerobase.babbook.domain.common.StatusCode.USER_WAIT_BOOK;
-import static com.zerobase.babbook.exception.ErrorCode.ALREADY_CANCEL_BOOK;
-import static com.zerobase.babbook.exception.ErrorCode.BAD_ACCESS_TIME;
-import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_ACCESS_BOOK_TIME;
-import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_CORRECT_BOOK_CANCEL;
-import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_CORRECT_BOOK_RESPONSE;
-import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_WAIT_REQUEST;
-import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_BOOK;
-import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_OWNER;
-import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_RESTAURANT;
-import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_USER;
-
 import com.zerobase.babbook.domain.common.OwnerAdmit;
+import com.zerobase.babbook.domain.common.StatusCode;
 import com.zerobase.babbook.domain.dto.BookDto;
 import com.zerobase.babbook.domain.dto.UserDto;
 import com.zerobase.babbook.domain.entity.Book;
@@ -36,6 +18,7 @@ import com.zerobase.babbook.exception.ErrorCode;
 import com.zerobase.babbook.token.JwtAuthenticationProvider;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -55,73 +38,89 @@ public class BookService {
     @Transactional
     public String requestBook(String token, Long restaurantId, BookForm form) {
         UserDto userCheck = provider.getUserDto(token);
+
         User user = userRepository.findById(userCheck.getId())
-            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
+
+        //시간값 형식이 바르지 않은 경우
+        if (!isValidateBookTime(form.getBookTime())) {
+            throw new CustomException(ErrorCode.DO_NOT_VALID_TIME);
+        }
+
         LocalDateTime nowTime = LocalDateTime.now();
         LocalDateTime bookTime = LocalDateTime.parse(form.getBookTime(),
             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         //fast fail
         if (bookTime.isBefore(nowTime)) {
-            throw new CustomException(BAD_ACCESS_TIME);
+            throw new CustomException(ErrorCode.BAD_ACCESS_TIME);
         }
         //30분은 기본값. 10분 이전의 예약 시간이기 때문에 해당 시간과 같은 설정을 넣음.
         if (bookTime.isBefore(
             nowTime.plusMinutes(30))) {
-            throw new CustomException(DO_NOT_ACCESS_BOOK_TIME);
+            throw new CustomException(ErrorCode.DO_NOT_ACCESS_BOOK_TIME);
         }
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
-            .orElseThrow(() -> new CustomException(NOT_FOUND_RESTAURANT));
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT));
         Book book = Book.builder()
             .createdBookTime(bookTime)
             .deadLineTime(bookTime.minusMinutes(10))
             .user(user)
             .restaurant(restaurant)
-            .statusCode(USER_WAIT_BOOK)
+            .statusCode(StatusCode.USER_WAIT_BOOK)
             .build();
         bookRepository.save(book);
         String name = restaurant.getName();
         return name + " 으로 예약 요청이 정상적으로 전송되었습니다.";
     }
 
+    private boolean isValidateBookTime(String bookTime) {
+        try {
+            LocalDateTime.parse(bookTime, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
     @Transactional
     public String responseBook(String token, Long bookId, OwnerAdmit ownerAdmit) {
         UserDto ownerCheck = provider.getUserDto(token);
         Owner owner = ownerRepository.findById(ownerCheck.getId())
-            .orElseThrow(() -> new CustomException(NOT_FOUND_OWNER));
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OWNER));
         Book book = bookRepository.findById(bookId)
-            .orElseThrow(() -> new CustomException(NOT_FOUND_BOOK));
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_BOOK));
 
         //DB 상의 매칭 오류일 수 있는 부분.
         // Restaurant 정보가 일치하지 않는 경우
         if (!owner.getRestaurant().contains(book.getRestaurant())) {
             //해당 경우 자동으로 취소되게 응답 보냄과 동시에, 에러 코드 발생.
-            book.setStatusCode(AUTO_CANCEL_BOOK);
+            book.setStatusCode(StatusCode.AUTO_CANCEL_BOOK);
             bookRepository.save(book);
-            throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
+            throw new CustomException(ErrorCode.DO_NOT_CORRECT_BOOK_RESPONSE);
         }
         //대기 중인 고객만 아래의 값을 받을 수 있음.
-        if (book.getStatusCode() != USER_WAIT_BOOK) {
-            throw new CustomException(DO_NOT_WAIT_REQUEST);
+        if (book.getStatusCode() != StatusCode.USER_WAIT_BOOK) {
+            throw new CustomException(ErrorCode.DO_NOT_WAIT_REQUEST);
         }
 
-        if (ownerAdmit == ACCEPT) {
+        if (ownerAdmit == OwnerAdmit.ACCEPT) {
             acceptResponse(book);
             return "성공적으로 승인되었습니다.";
-        } else if (ownerAdmit == REJECT) {//REJECT
+        } else if (ownerAdmit == OwnerAdmit.REJECT) {//REJECT
             rejectResponse(book);
             return "예약이 거절 되었습니다.";
         } else {
-            throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
+            throw new CustomException(ErrorCode.DO_NOT_CORRECT_BOOK_RESPONSE);
         }
     }
 
     private void acceptResponse(Book book) {
-        book.setStatusCode(OWNER_ACCEPT_BOOK);//예약 중인 상태.
+        book.setStatusCode(StatusCode.OWNER_ACCEPT_BOOK);//예약 중인 상태.
         bookRepository.save(book);
     }
 
     private void rejectResponse(Book book) {
-        book.setStatusCode(OWNER_REJECT_BOOK);
+        book.setStatusCode(StatusCode.OWNER_REJECT_BOOK);
         bookRepository.save(book);
     }
 
@@ -129,21 +128,21 @@ public class BookService {
     public String cancelBook(String token, Long bookId) {
         UserDto userDto = provider.getUserDto(token);
         User user = userRepository.findById(userDto.getId())
-            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         Book book = bookRepository.findById(bookId)
-            .orElseThrow(() -> new CustomException(NOT_FOUND_BOOK));
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_BOOK));
 
         //이미 취소 된 예약번호는 취소할 수 없음
-        if (book.getStatusCode().equals(TIMEOUT_CANCEL_BOOK) ||
-            book.getStatusCode().equals(AUTO_CANCEL_BOOK)) {
-            throw new CustomException(ALREADY_CANCEL_BOOK);
+        if (book.getStatusCode() == StatusCode.TIMEOUT_CANCEL_BOOK ||
+            book.getStatusCode() == StatusCode.AUTO_CANCEL_BOOK) {
+            throw new CustomException(ErrorCode.ALREADY_CANCEL_BOOK);
         }
         //예약자와 book 의 유저의 일치 여부 확인
         if (!user.equals(book.getUser())) {
-            throw new CustomException(DO_NOT_CORRECT_BOOK_CANCEL);
+            throw new CustomException(ErrorCode.DO_NOT_CORRECT_BOOK_CANCEL);
         }
         //이제 취소가 가능한 상태.
-        book.setStatusCode(USER_CANCEL_BOOK);
+        book.setStatusCode(StatusCode.USER_CANCEL_BOOK);
         bookRepository.save(book);
         return "예약이 정상적으로 취소되었습니다.";
     }

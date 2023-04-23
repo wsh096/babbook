@@ -12,6 +12,8 @@ import com.zerobase.babbook.exception.ErrorCode;
 import com.zerobase.babbook.token.JwtAuthenticationProvider;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,10 @@ public class RestaurantService {
         ownerRepository.findById(owner.getId())
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OWNER));
 
+        if(!isValidBusinessNumber(form.getBusinessNumber())){
+            throw new CustomException(ErrorCode.DO_NOT_VALID_BUSINESS_NUMBER);
+        }
+
         if (isBusinessNumberExist(form.getBusinessNumber())) {
             throw new CustomException(ErrorCode.ALREADY_REGISTER_BUSINESSNUMBER);
         } else {
@@ -37,6 +43,12 @@ public class RestaurantService {
             String name = restaurant.getName();
             return name + " 식당이 정상적으로 등록되었습니다.";
         }
+    }
+
+    private boolean isValidBusinessNumber(String businessNumber) {
+        Pattern pattern = Pattern.compile("\\d{3}-\\d{2}-\\d{5}");
+        Matcher matcher = pattern.matcher(businessNumber);
+        return matcher.matches();
     }
 
     private Restaurant add(RestaurantForm form, Long ownerId) {

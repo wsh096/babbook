@@ -37,7 +37,7 @@ public class Restaurant extends BaseEntity {
     private Owner owner;
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Book> books;
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Review> reviews;
     private String name;
     @Column(length = 500)
