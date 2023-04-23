@@ -1,0 +1,34 @@
+### get_Book_List
+
+GET http://localhost:8080/book/list
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI2ODcxMCwiZXhwIjoxNjgyMzU1MTEwfQ.4fKdzhATiwVNniNN8KP8WF7J5dNuYg_e5iVNWdDE5Nk
+
+### get_Book_Detail
+
+GET http://localhost:8080/book/find/1
+Content-Type: application/json
+
+
+### user_Book_Cancel
+POST http://localhost:8080/book/cancel/3
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI2ODcxMCwiZXhwIjoxNjgyMzU1MTEwfQ.4fKdzhATiwVNniNN8KP8WF7J5dNuYg_e5iVNWdDE5Nk
+
+
+### user_Request_book_ToRestaurant
+POST http://localhost:8080/book/request/1
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI2ODcxMCwiZXhwIjoxNjgyMzU1MTEwfQ.4fKdzhATiwVNniNN8KP8WF7J5dNuYg_e5iVNWdDE5Nk
+
+{
+  "bookTime": "2023-05-25T15:00:33"
+}
+
+
+### owner_Response_book_ToUser
+POST http://localhost:8080/book/response/2
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIyNjg3NjQsImV4cCI6MTY4MjM1NTE2NH0.GGMmqYEcGcp1S8-xdkhAFiqdxUJV7rNMz8evjP2Y4RM
+
+  "승인"

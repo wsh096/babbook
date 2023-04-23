@@ -32,7 +32,7 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.getBookDetail(bookId));
     }
 
-    @GetMapping("/List")
+    @GetMapping("/list")
     public ResponseEntity<?> myBookList(@RequestHeader(name = TOKEN) String token) {
         return ResponseEntity.ok().body(bookService.mybookList(token));
     }

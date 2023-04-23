@@ -1,0 +1,53 @@
+### get_All_restaurant
+
+GET http://localhost:8080/restaurant
+Content-Type: application/json
+
+
+### search_RestaurantName
+
+GET http://localhost:8080/restaurant/search/최고의 맛집
+Content-Type: application/json; charset=UTF-8
+
+
+### get_Detail_Restaurnat
+
+GET http://localhost:8080/restaurant/detail/1
+Content-Type: application/json
+
+
+### add_Restaurant
+
+POST http://localhost:8080/restaurant/add
+Content-Type: application/json; charset=UTF-8
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIyNjg3NjQsImV4cCI6MTY4MjM1NTE2NH0.GGMmqYEcGcp1S8-xdkhAFiqdxUJV7rNMz8evjP2Y4RM
+
+{
+  "name": "최고의 맛집",
+  "description": "맛있습니다.",
+  "businessNumber": "000-00-00002",
+  "address": "대한민국 서울시 관악구 신림동",
+  "phone": "02-318-5512"
+}
+
+
+### modify_Restaurant
+
+PUT http://localhost:8080/restaurant/modify
+Content-Type: application/json; charset=UTF-8
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIyNjg3NjQsImV4cCI6MTY4MjM1NTE2NH0.GGMmqYEcGcp1S8-xdkhAFiqdxUJV7rNMz8evjP2Y4RM
+
+{
+  "name": "최고의 맛집",
+  "description": "주소가 바꼈습니다.^^",
+  "businessNumber": "000-00-00001",
+  "address": "대한민국 서울시 관악구 신림동 0000-01",
+  "phone": "02-318-5512"
+}
+
+
+### delete_Restaurant
+
+DELETE  http://localhost:8080/restaurant/delete/2
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIyNjg3NjQsImV4cCI6MTY4MjM1NTE2NH0.GGMmqYEcGcp1S8-xdkhAFiqdxUJV7rNMz8evjP2Y4RM

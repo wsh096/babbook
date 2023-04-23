@@ -1,0 +1,25 @@
+### get_All_MyReview
+
+GET http://localhost:8080/review/my
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI2ODcxMCwiZXhwIjoxNjgyMzU1MTEwfQ.4fKdzhATiwVNniNN8KP8WF7J5dNuYg_e5iVNWdDE5Nk
+
+
+### get_Review_Detail
+
+GET http://localhost:8080/review/my/1
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI2ODcxMCwiZXhwIjoxNjgyMzU1MTEwfQ.4fKdzhATiwVNniNN8KP8WF7J5dNuYg_e5iVNWdDE5Nk
+
+
+### add_Review
+
+POST http://localhost:8080/review/add?bookId=1
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI2ODcxMCwiZXhwIjoxNjgyMzU1MTEwfQ.4fKdzhATiwVNniNN8KP8WF7J5dNuYg_e5iVNWdDE5Nk
+
+{
+  "title": "인생 맛집 찾았습니다.",
+  "description": "말이 필요 없습니다. 또 갈 겁니다.",
+  "rate": 10
+}
