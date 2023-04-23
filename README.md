@@ -1,4 +1,5 @@
 # 식당 예약시스템
+### ProjectDescription
     사용자(User)가 식당을 미리 예약.  
     점주(Owner)는 이를 승인(Accept) 및 거절(Reject)을 통해 예약을 확정.    
     예약된 사용자는 예약 10분 전에 키오스크를 통한 인증
@@ -15,8 +16,8 @@
     USE : Lombok, Spring Web, OpenFeign, springdoc(Swgager)
           validation
           Spring Data JDBC, Spring Data JPA, H2, MariaDB.
-
-
+### ProjectImage
+![img_1.png](img_1.png)
 ## 공통
 - [ ] globalException을 통한 기본 값 설정 사업자 번호, 및 시간 관련 설정 등(TODO)
 - [x] 둘러보기(전체 음식점 리스트가 보임) (기본과제)
@@ -52,4 +53,5 @@
 - [x] scratch 파일을 통한 controller 확인
 - [x] Swagger 를 통한 확인
 
-
+## ERD 이미지
+![img.png](img.png)
