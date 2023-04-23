@@ -22,7 +22,7 @@ public class BookSchedulerService {
         this.bookRepository = bookRepository;
     }
 
-    // 5분 정도의 간격으로 실행
+    // 5분 간격으로 실행
     // 10분의 간격은 각 예약 별 시간의 편차가 생길 것으로 추정
     // 추가로 모든 BookCode를 가지고 올 필요가 없고, 예약 중인 것들만 가지고 오면 되기 때문에 스트림식 작성.
     @Transactional

@@ -1,9 +1,9 @@
-package com.zerobase.babbook.service;
+package com.zerobase.babbook.service.restaurant;
 
+import com.zerobase.babbook.domain.dto.RestaurantDto;
 import com.zerobase.babbook.domain.dto.UserDto;
 import com.zerobase.babbook.domain.entity.Owner;
 import com.zerobase.babbook.domain.entity.Restaurant;
-import com.zerobase.babbook.domain.entity.Review;
 import com.zerobase.babbook.domain.form.RestaurantForm;
 import com.zerobase.babbook.domain.reprository.OwnerRepository;
 import com.zerobase.babbook.domain.reprository.RestaurantRepository;
@@ -100,46 +100,25 @@ public class RestaurantService {
         }
     }
 
-    //간단하게 보이는 곳(전체 페이지 처리 필요.) 리스트//페이지 처리 필요. 별도로 만들기.
-    public List<Restaurant> restaurantList() {
-        return restaurantRepository.findAll();
+    //간단하게 보이는 곳(전체 페이지 처리 필요.) 리스트
+    // 페이지 처리 필요. 별도로 만들기
+    // 추가 수정 이름과 평점으로 보이게
+    // 평점의 경우 리뷰로 만들어지는 값.
+    public List<RestaurantDto> restaurantList() {
+        return RestaurantDto.fromList(restaurantRepository.findAll());
     }
 
     //상세하게 보이게 하는 곳.(특정 데이터 전체 확인)
-    public Restaurant restaurantDetail(Long restaurantId) {
-        return restaurantRepository.findById(restaurantId)
-            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT));
+    public RestaurantDto restaurantDetail(Long restaurantId) {
+        return RestaurantDto.from(restaurantRepository.findById(restaurantId)
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT)));
     }
 
     //    검색 like 와 같이 유사한 것까지 검색 되게 하고 싶으나 식당 이름을 상세하게 안다는 전제하에 진행.
     //    단, 같은 이름의 식당이 있을 수 있으므로 리스트로 반환.
-    public List<Restaurant> restaurantNameSearch(String name) {
-        return restaurantRepository
+    public List<String> restaurantNameSearch(String name) {
+        return RestaurantDto.nameList(restaurantRepository
             .findAllByName(name)
-            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT));
-    }
-
-    //리뷰 관련
-    private void addReview(Review review) {
-        this.reviews.add(review);
-        updateAverageRate();
-    }
-
-    private void removeReview(Review review) {
-        this.reviews.remove(review);
-        updateAverageRate();
-    }
-
-    private void updateAverageRate() {
-        int count = this.reviews.size();
-        if (count == 0) {
-            this.averageRate = 0.0;
-            return;
-        }
-
-        int sum = this.reviews.stream()
-            .mapToInt(Review::getRate)
-            .sum();
-        this.averageRate = (double) sum / count;
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT)));
     }
 }

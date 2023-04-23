@@ -20,6 +20,7 @@ import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_RESTAURANT;
 import static com.zerobase.babbook.exception.ErrorCode.NOT_FOUND_USER;
 
 import com.zerobase.babbook.domain.common.OwnerAdmit;
+import com.zerobase.babbook.domain.dto.BookDto;
 import com.zerobase.babbook.domain.dto.UserDto;
 import com.zerobase.babbook.domain.entity.Book;
 import com.zerobase.babbook.domain.entity.Owner;
@@ -149,19 +150,19 @@ public class BookService {
 
     //하나의 특정 예약의 정보를 확인.
 
-    public Book getBookDetail(Long bookId) {
-        return bookRepository.findById(bookId)
-            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_BOOK));
+    public BookDto getBookDetail(Long bookId) {
+        return BookDto.from(bookRepository.findById(bookId)
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_BOOK)));
     }
 
     //유저 자신이 예약 내역 전체를 확인
     //심플하게 List를 간소화해서 보여주는 작업이 가능할 것으로 보임
 
-    public List<Book> mybookList(String token) {
+    public List<BookDto> mybookList(String token) {
         UserDto userDto = provider.getUserDto(token);
         User user = userRepository
             .findById(userDto.getId())
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
-        return user.getBook();
+        return BookDto.myBookList(user.getBook());
     }
 }

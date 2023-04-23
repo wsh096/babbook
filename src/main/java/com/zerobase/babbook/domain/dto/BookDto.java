@@ -23,11 +23,11 @@ public class BookDto {
     private StatusCode statusCode;
 
     public static BookDto from(Book book) {
-
+        //deadLineTime 이 예약 결정의 판가름
         return BookDto.builder()
             .bookId(book.getId())
             .restaurantName(book.getRestaurant().getName())
-            .deadLineTime(book.getDeadLineTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))//해당 시간이 예약 결정의 판가름
+            .deadLineTime(book.getDeadLineTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
             .statusCode(book.getStatusCode())
             .build();
     }
