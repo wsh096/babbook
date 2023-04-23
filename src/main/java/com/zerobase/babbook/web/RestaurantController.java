@@ -46,7 +46,7 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantService.addRestaurant(token, form));
     }
 
-    @PutMapping("/update")
+    @PutMapping("/modify")
     public ResponseEntity<?> updateRestaurant(@RequestHeader(name = TOKEN) String token,
         @RequestBody RestaurantForm form) {
         return ResponseEntity.ok(restaurantService.updateRestaurant(token, form));

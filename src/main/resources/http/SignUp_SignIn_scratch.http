@@ -1,0 +1,42 @@
+### user_Signup
+POST http://localhost:8080/signup/user
+Content-Type: application/json
+
+{
+  "email": "testUser@gmail.com",
+  "password": "0000",
+  "name": "사용자",
+  "phone": "018-0000-0002"
+}
+
+
+### user_Signin
+POST http://localhost:8080/signin/user
+Content-Type: application/json
+
+{
+  "email": "testUser@gmail.com",
+  "password": "0000"
+}
+
+
+### owner_Signup
+POST http://localhost:8080/signup/owner
+Content-Type: application/json;charset=UTF-8
+
+{
+  "email": "testOwner@gmail.com",
+  "password": "0000",
+  "name": "테스트사용자",
+  "phone": "011-0000-0000"
+}
+
+
+### owner_Signin
+POST http://localhost:8080/signin/owner
+Content-Type: application/json
+
+{
+  "email": "testOwner@gmail.com",
+  "password": "0000"
+}
