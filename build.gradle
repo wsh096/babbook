@@ -27,7 +27,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'//token 생성
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    //implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.jetbrains:annotations:23.0.0'
@@ -39,8 +39,8 @@ dependencies {
 
 
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
-//    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-//    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    //implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    //implementation 'io.springfox:springfox-swagger-ui:3.0.0'
     //implementation 'org.apache.commons:commons-lang3:3.12.0'
 
 }
