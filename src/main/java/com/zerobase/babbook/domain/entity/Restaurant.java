@@ -55,8 +55,4 @@ public class Restaurant extends BaseEntity {
             .build();
     }
 
-    public boolean isValidBusinessNumber() {
-        // XXX-XX-XXXXX 형식의 유효성 검사
-        return businessNumber != null && businessNumber.matches("\\d{3}-\\d{2}-\\d{5}");
-    }
 }

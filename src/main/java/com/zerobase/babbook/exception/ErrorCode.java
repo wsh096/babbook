@@ -33,6 +33,13 @@ public enum ErrorCode {
     ALREADY_CANCEL_BOOK(HttpStatus.BAD_REQUEST, "해당 예약은 이미 취소된 예약입니다."),
     NOT_BOOK_IS_DO_NOT_ALLOW_CANCEL(HttpStatus.BAD_REQUEST, "해당 예약은 "),
     EXAMPLE(HttpStatus.BAD_REQUEST, " 비정상적인 접근입니다."),
+
+
+    //Kiosk 응답
+    //조회에서 필요하지 않은 이유는 따로, 해당 내역을 조회한다고 해서 의미가 있는 게 아니기 때문.
+    NO_MATCH_BOOK_AND_USER(HttpStatus.BAD_REQUEST, "예약자와 예약내역이 일치하지 않습니다."),
+    NO_ACCEPT_BOOK(HttpStatus.BAD_REQUEST, "아직 승인되지 않은 예약은 사용할 수 없습니다."),
+    NO_USE_BOOK(HttpStatus.BAD_REQUEST, "해당 예약은 사용되었거나 취소되었기에 사용할 수 없습니다."),
     EXCEPTION_SAMMPLE(HttpStatus.BAD_REQUEST, "끝맺는 예시");
     private final HttpStatus httpStatus;
     private final String detail;

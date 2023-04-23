@@ -1,9 +1,7 @@
 package com.zerobase.babbook.domain.dto;
 
-import com.zerobase.babbook.domain.common.BookCode;
+import com.zerobase.babbook.domain.common.StatusCode;
 import com.zerobase.babbook.domain.entity.Book;
-import com.zerobase.babbook.domain.entity.Restaurant;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,7 @@ public class BookDto {
     private Long bookId;
     private String restaurantName;
     private String deadLineTime;
-    private BookCode bookCode;
+    private StatusCode statusCode;
 
     public static BookDto from(Book book) {
 
@@ -30,7 +28,7 @@ public class BookDto {
             .bookId(book.getId())
             .restaurantName(book.getRestaurant().getName())
             .deadLineTime(book.getDeadLineTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))//해당 시간이 예약 결정의 판가름
-            .bookCode(book.getBookCode())
+            .statusCode(book.getStatusCode())
             .build();
     }
 
@@ -46,7 +44,7 @@ public class BookDto {
             Book eachBook = books.get(i);
             BookDto eachBookDto = BookDto.builder()
                 .restaurantName(eachBook.getRestaurant().getName())
-                .bookCode(eachBook.getBookCode())
+                .statusCode(eachBook.getStatusCode())
                 .build();
             myBookList.add(eachBookDto);
         }

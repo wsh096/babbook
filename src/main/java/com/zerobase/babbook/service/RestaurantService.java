@@ -15,6 +15,7 @@ import com.zerobase.babbook.domain.reprository.RestaurantRepository;
 import com.zerobase.babbook.exception.CustomException;
 import com.zerobase.babbook.token.JwtAuthenticationProvider;
 import java.util.List;
+import java.util.Objects;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,13 +55,17 @@ public class RestaurantService {
     //레스토랑 업데이트
     @Transactional
     public String updateRestaurant(String token, RestaurantForm form) {
-        UserDto owner = provider.getUserDto(token);
+        UserDto ownerCheck = provider.getUserDto(token);
+        Owner owner = ownerRepository.findById(ownerCheck.getId())
+            .orElseThrow(() -> new CustomException(NOT_FOUND_OWNER));
+
         Restaurant restaurant = restaurantRepository
             .findByBusinessNumber(form.getBusinessNumber())
             .orElseThrow(() -> new CustomException(NOT_CORRECT_BUSINESSNUMBER));
-        Restaurant check = restaurantRepository.findByOwnerId(
-                owner.getId())
+
+        Restaurant check = restaurantRepository.findByOwner(owner)
             .orElseThrow(() -> new CustomException(NOT_FOUND_OWNER));
+
         if (!restaurant.equals(check)) {//불일치
             throw new CustomException(DO_NOT_CORRECT_ACCESS);
         } else {
@@ -80,15 +85,18 @@ public class RestaurantService {
 
     //레스토랑 삭제
     public String delete(String token, Long restaurantId) {
-        UserDto owner = provider.getUserDto(token);
+        UserDto ownerCheck = provider.getUserDto(token);
+
+        Owner owner = ownerRepository.findById(ownerCheck.getId())
+            .orElseThrow(() -> new CustomException(NOT_FOUND_OWNER));
+
         Restaurant restaurant = restaurantRepository
             .findById(restaurantId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_RESTAURANT));
-        Restaurant check = restaurantRepository.findByOwnerId(
-                owner.getId())
-            .orElseThrow(() -> new CustomException(NOT_FOUND_OWNER));
+
         String name = restaurant.getName();
-        if (!restaurant.equals(check)) {//불일치
+
+        if (!Objects.equals(restaurant.getOwner().getId(), owner.getId())) {//불일치
             throw new CustomException(DO_NOT_CORRECT_ACCESS);
         } else {
             restaurantRepository.deleteById(restaurantId);

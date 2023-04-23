@@ -1,13 +1,13 @@
 package com.zerobase.babbook.service.book;
 
-import static com.zerobase.babbook.domain.common.BookCode.AUTO_CANCEL_BOOK;
-import static com.zerobase.babbook.domain.common.BookCode.OWNER_ACCEPT_BOOK;
-import static com.zerobase.babbook.domain.common.BookCode.OWNER_REJECT_BOOK;
-import static com.zerobase.babbook.domain.common.BookCode.TIMEOUT_CANCEL_BOOK;
-import static com.zerobase.babbook.domain.common.BookCode.USER_CANCEL_BOOK;
-import static com.zerobase.babbook.domain.common.BookCode.USER_WAIT_BOOK;
 import static com.zerobase.babbook.domain.common.OwnerAdmit.ACCEPT;
 import static com.zerobase.babbook.domain.common.OwnerAdmit.REJECT;
+import static com.zerobase.babbook.domain.common.StatusCode.AUTO_CANCEL_BOOK;
+import static com.zerobase.babbook.domain.common.StatusCode.OWNER_ACCEPT_BOOK;
+import static com.zerobase.babbook.domain.common.StatusCode.OWNER_REJECT_BOOK;
+import static com.zerobase.babbook.domain.common.StatusCode.TIMEOUT_CANCEL_BOOK;
+import static com.zerobase.babbook.domain.common.StatusCode.USER_CANCEL_BOOK;
+import static com.zerobase.babbook.domain.common.StatusCode.USER_WAIT_BOOK;
 import static com.zerobase.babbook.exception.ErrorCode.ALREADY_CANCEL_BOOK;
 import static com.zerobase.babbook.exception.ErrorCode.BAD_ACCESS_TIME;
 import static com.zerobase.babbook.exception.ErrorCode.DO_NOT_ACCESS_BOOK_TIME;
@@ -72,7 +72,7 @@ public class BookService {
             .deadLineTime(bookTime.minusMinutes(10))
             .user(user)
             .restaurant(restaurant)
-            .bookCode(USER_WAIT_BOOK)
+            .statusCode(USER_WAIT_BOOK)
             .build();
         bookRepository.save(book);
         String name = restaurant.getName();
@@ -90,12 +90,12 @@ public class BookService {
         // Restaurant 정보가 일치하지 않는 경우
         if (!owner.getRestaurant().contains(book.getRestaurant())) {
             //해당 경우 자동으로 취소되게 응답 보냄과 동시에, 에러 코드 발생.
-            book.setBookCode(AUTO_CANCEL_BOOK);
+            book.setStatusCode(AUTO_CANCEL_BOOK);
             bookRepository.save(book);
             throw new CustomException(DO_NOT_CORRECT_BOOK_RESPONSE);
         }
         //대기 중인 고객만 아래의 값을 받을 수 있음.
-        if(book.getBookCode()!=USER_WAIT_BOOK){
+        if(book.getStatusCode()!=USER_WAIT_BOOK){
             throw new CustomException(DO_NOT_WAIT_REQUEST);
         }
 
@@ -111,12 +111,12 @@ public class BookService {
     }
 
     private void acceptResponse(Book book) {
-        book.setBookCode(OWNER_ACCEPT_BOOK);//예약 중인 상태.
+        book.setStatusCode(OWNER_ACCEPT_BOOK);//예약 중인 상태.
         bookRepository.save(book);
     }
 
     private void rejectResponse(Book book) {
-        book.setBookCode(OWNER_REJECT_BOOK);
+        book.setStatusCode(OWNER_REJECT_BOOK);
         bookRepository.save(book);
     }
 
@@ -128,8 +128,8 @@ public class BookService {
             .orElseThrow(() -> new CustomException(NOT_FOUND_BOOK));
 
         //이미 취소 된 예약번호는 취소할 수 없음
-        if (book.getBookCode().equals(TIMEOUT_CANCEL_BOOK) ||
-            book.getBookCode().equals(AUTO_CANCEL_BOOK)) {
+        if (book.getStatusCode().equals(TIMEOUT_CANCEL_BOOK) ||
+            book.getStatusCode().equals(AUTO_CANCEL_BOOK)) {
             throw new CustomException(ALREADY_CANCEL_BOOK);
         }
         //예약자와 book 의 유저의 일치 여부 확인
@@ -137,7 +137,7 @@ public class BookService {
             throw new CustomException(DO_NOT_CORRECT_BOOK_CANCEL);
         }
         //이제 취소가 가능한 상태.
-        book.setBookCode(USER_CANCEL_BOOK);
+        book.setStatusCode(USER_CANCEL_BOOK);
         bookRepository.save(book);
         return "예약이 정상적으로 취소되었습니다.";
     }

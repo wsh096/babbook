@@ -1,7 +1,7 @@
 package com.zerobase.babbook.service.book;
 
-import static com.zerobase.babbook.domain.common.BookCode.OWNER_ACCEPT_BOOK;
-import static com.zerobase.babbook.domain.common.BookCode.TIMEOUT_CANCEL_BOOK;
+import static com.zerobase.babbook.domain.common.StatusCode.OWNER_ACCEPT_BOOK;
+import static com.zerobase.babbook.domain.common.StatusCode.TIMEOUT_CANCEL_BOOK;
 
 import com.zerobase.babbook.domain.entity.Book;
 import com.zerobase.babbook.domain.reprository.BookRepository;
@@ -30,12 +30,12 @@ public class BookSchedulerService {
     @Scheduled(fixedRate = 300000)
     public void updateBookCode() {
         LocalDateTime now = LocalDateTime.now();
-        List<Book> books = bookRepository.findByDeadLineTimeBeforeAndBookCodeNot(now, TIMEOUT_CANCEL_BOOK)
+        List<Book> books = bookRepository.findByDeadLineTimeBeforeAndStatusCodeNot(now, TIMEOUT_CANCEL_BOOK)
             .stream().filter(book ->
-                book.getBookCode().equals(OWNER_ACCEPT_BOOK))
+                book.getStatusCode().equals(OWNER_ACCEPT_BOOK))
             .collect(Collectors.toList());
         for (Book book : books) {
-            book.setBookCode(TIMEOUT_CANCEL_BOOK);
+            book.setStatusCode(TIMEOUT_CANCEL_BOOK);
             bookRepository.save(book);
         }
     }

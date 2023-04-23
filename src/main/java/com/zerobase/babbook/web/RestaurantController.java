@@ -35,8 +35,8 @@ public class RestaurantController {
         return ResponseEntity.ok()
             .body(RestaurantDto.nameList(restaurantService.restaurantNameSearch(restaurantName)));
     }
-    @GetMapping("detail/{restaurantId}")
-    public ResponseEntity<?> getRestaurantDetail(@PathVariable Long restaurantId) {
+    @GetMapping("detail/{restaurant_id}")
+    public ResponseEntity<?> getRestaurantDetail(@PathVariable(name = "restaurant_id") Long restaurantId) {
         return ResponseEntity.ok()
             .body(RestaurantDto.from(restaurantService.restaurantDetail(restaurantId)));
     }
@@ -53,9 +53,9 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantService.updateRestaurant(token, form));
     }
     //제대로 삭제 안 되고 있음 TODO
-    @DeleteMapping("/delete/{restaurantId}")
+    @DeleteMapping("/delete/{restaurant_id}")
     public ResponseEntity<?> deleteRestaurant(@RequestHeader(name = TOKEN) String token,
-        @PathVariable Long restaurantId) {
+        @PathVariable(name = "restaurant_id") Long restaurantId) {
         return ResponseEntity.ok(restaurantService.delete(token, restaurantId));
     }
 
