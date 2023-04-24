@@ -57,4 +57,4 @@
 ![img_2.png](기술과제%20스크래치%20파일%20및%20이미지%20파일/img_2.png)
 
 ## 스크래치 파일을 통한 결과 확인
-1. 회원 가입.
+[기술과제 스크래치 파일 및 이미지 파일](https://github.com/wsh096/babbook/blob/3016a969fb35c91ac1c1150de346225102ece4a0/%EA%B8%B0%EC%88%A0%EA%B3%BC%EC%A0%9C%20%EC%8A%A4%ED%81%AC%EB%9E%98%EC%B9%98%20%ED%8C%8C%EC%9D%BC%20%EB%B0%8F%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%ED%8C%8C%EC%9D%BC)
