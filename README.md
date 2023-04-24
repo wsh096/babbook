@@ -53,5 +53,5 @@
 - [x] scratch 파일을 통한 controller 확인
 - [x] Swagger 를 통한 확인
 
-## ERD 이미지
-![img_2.png](img_2.png)!
+## ERD 이미지(연관관계매핑)
+![img_2.png](img_2.png)
