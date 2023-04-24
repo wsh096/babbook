@@ -38,8 +38,8 @@ public enum ErrorCode {
     //Book 관련(예약)
     //예약 만들기, 확인, 관련
     NOT_FOUND_BOOK(HttpStatus.BAD_REQUEST, "존재하지 않는 예약입니다."),
-    BAD_ACCESS_TIME(HttpStatus.BAD_REQUEST, "현재 시간보다 이전은 예약할 수 없습니다. 현재 시간 보다 30분 이후의 시간부터 예약이 가능합니다."),
-    DO_NOT_ACCESS_BOOK_TIME(HttpStatus.BAD_REQUEST, "현재 시간 보다 30분 이전은 예약할 수 없습니다. 현재 시간 보다 30분 이후의 시간부터 예약이 가능합니다."),
+    ALREADY_OVER_TIME(HttpStatus.BAD_REQUEST, "현재 시간보다 이전은 예약할 수 없습니다. 현재 시간 보다 30분 이후의 시간부터 예약이 가능합니다."),
+    TOO_EARLY_BOOK_TIME(HttpStatus.BAD_REQUEST, "현재 시간 보다 30분 이전은 예약할 수 없습니다. 현재 시간 보다 30분 이후의 시간부터 예약이 가능합니다."),
     DO_NOT_CORRECT_BOOK_RESPONSE(HttpStatus.BAD_REQUEST, "예약에 관한 적절한 응답이 아닙니다. \"승인\" 또는 \"거절\"을 선택해 주십시오."),
     DO_NOT_WAIT_REQUEST(HttpStatus.BAD_REQUEST, "예약 대기 상태가 아닙니다. 잘못된 요청입니다."),
     DO_NOT_VALID_TIME(HttpStatus.BAD_REQUEST, "시간 형식이 바르지 않습니다. 1999-01-01T00:00:00 형식을 맞춰 주십시오."),

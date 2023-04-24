@@ -18,6 +18,9 @@ import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * 식당에 관한 비즈니스 로직 담당하는 서비스 클래스
+ */
 @Service
 @RequiredArgsConstructor
 public class RestaurantService {
@@ -25,8 +28,37 @@ public class RestaurantService {
     private final JwtAuthenticationProvider provider;
     private final RestaurantRepository restaurantRepository;
     private final OwnerRepository ownerRepository;
+    /**
+     * 식당 전체 목록 확인
+     */
+    public List<RestaurantDto> restaurantList() {
+        return RestaurantDto.fromList(restaurantRepository.findAll());
+    }
+    /**
+     * 식당 상세 확인
+     * 찾는 식당이 없으면 에러
+     */
+    public RestaurantDto restaurantDetail(Long restaurantId) {
+        return RestaurantDto.from(restaurantRepository.findById(restaurantId)
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT)));
+    }
 
-    //레스토랑 추가
+    /**
+     * 식당 이름 검색
+     * 단, 같은 이름의 식당이 있을 수 있으므로, List로 만들며,
+     * 해당 값은 null을 반환할 수 있음.
+     */
+    public List<String> restaurantNameSearch(String name) {
+        return RestaurantDto.nameList(restaurantRepository
+            .findAllByName(name)
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT)));
+    }
+    /**
+     * 레스토랑 추가
+     * 토큰 유효성 검사, 점주 확인,
+     * 비즈니스 넘버 유효성 확인,
+     * 이미 등록된 사업자 번호인지 확인.
+     */
     public String addRestaurant(String token, RestaurantForm form) {
         if(!provider.validateToken(token)){
             throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
@@ -48,22 +80,35 @@ public class RestaurantService {
         }
     }
 
+    /**
+     * 비즈니스 넘버 유효성 확인
+     */
     private boolean isValidBusinessNumber(String businessNumber) {
         Pattern pattern = Pattern.compile("\\d{3}-\\d{2}-\\d{5}");
         Matcher matcher = pattern.matcher(businessNumber);
         return matcher.matches();
     }
 
+    /**
+     * 레스토랑 저장 메서드
+     */
     private Restaurant add(RestaurantForm form, Long ownerId) {
         Owner owner = ownerRepository.findById(ownerId).get();
         return restaurantRepository.save(Restaurant.of(form, owner));
     }
 
+    /**
+     * 이미 등록된 사업자 번호인지 확인.
+     */
     private boolean isBusinessNumberExist(String businessNumber) {
         return restaurantRepository.findByBusinessNumber(businessNumber).isPresent();
     }
 
-    //레스토랑 업데이트
+    /**
+     * 레스토랑 업데이트
+     * 업데이트이기 때문에 추가와 다른 점은 businessnumber가 기존의 id의 값과
+     * 다르다는 것으로 표시가 가능.
+     */
     @Transactional
     public String updateRestaurant(String token, RestaurantForm form) {
         if(!provider.validateToken(token)){
@@ -79,15 +124,20 @@ public class RestaurantService {
 
         Restaurant check = restaurantRepository.findByOwner(owner)
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OWNER));
-
-        if (!restaurant.equals(check)) {//불일치
+        /**
+         * 2개의 restaurant이 다른 상태라면 수정을 하면 안 됨.
+         */
+        if (restaurant!=check) {//불일치
             throw new CustomException(ErrorCode.DO_NOT_CORRECT_ACCESS);
         } else {
-            restaurant = update(form);
+            update(form);
             return " 정상적으로 수정 되었습니다.";
         }
     }
 
+    /**
+     * 레스토랑 업데이트
+     */
     private Restaurant update(RestaurantForm form) {
         Restaurant restaurant =
             restaurantRepository.findByBusinessNumber(form.getBusinessNumber()).get();
@@ -97,7 +147,9 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    //레스토랑 삭제
+    /**
+     * 레스토랑 삭제
+     */
     public String delete(String token, Long restaurantId) {
         if(!provider.validateToken(token)){
             throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
@@ -112,8 +164,11 @@ public class RestaurantService {
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT));
 
         String name = restaurant.getName();
-
-        if (!Objects.equals(restaurant.getOwner().getId(), owner.getId())) {//불일치
+        /**
+         * 삭제하는 사람과 작성자의 일치 여부 확인
+         * 불일치할 경우 삭제 못하게 막기.
+         */
+        if (!Objects.equals(restaurant.getOwner().getId(), owner.getId())) {
             throw new CustomException(ErrorCode.DO_NOT_CORRECT_ACCESS);
         } else {
             restaurantRepository.deleteById(restaurantId);
@@ -121,25 +176,4 @@ public class RestaurantService {
         }
     }
 
-    //간단하게 보이는 곳(전체 페이지 처리 필요.) 리스트
-    // 페이지 처리 필요. 별도로 만들기
-    // 추가 수정 이름과 평점으로 보이게
-    // 평점의 경우 리뷰로 만들어지는 값.
-    public List<RestaurantDto> restaurantList() {
-        return RestaurantDto.fromList(restaurantRepository.findAll());
-    }
-
-    //상세하게 보이게 하는 곳.(특정 데이터 전체 확인)
-    public RestaurantDto restaurantDetail(Long restaurantId) {
-        return RestaurantDto.from(restaurantRepository.findById(restaurantId)
-            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT)));
-    }
-
-    //    검색 like 와 같이 유사한 것까지 검색 되게 하고 싶으나 식당 이름을 상세하게 안다는 전제하에 진행.
-    //    단, 같은 이름의 식당이 있을 수 있으므로 리스트로 반환.
-    public List<String> restaurantNameSearch(String name) {
-        return RestaurantDto.nameList(restaurantRepository
-            .findAllByName(name)
-            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT)));
-    }
 }

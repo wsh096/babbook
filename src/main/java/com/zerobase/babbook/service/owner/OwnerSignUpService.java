@@ -10,13 +10,18 @@ import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+/**
+ * 점주 회원 가입에 관한 비즈니스 로직 담당하는 서비스 클래스
+ */
 @Service
 @RequiredArgsConstructor
 public class OwnerSignUpService {
 
     private final OwnerRepository ownerRepository;
-
+    /**
+     * ownerSignUp 메서드로 회원가입 폼(SignUpForm) 전달 받아
+     * 이메일 중복 여부, 전화번호 유효성을 체크하고 회원 정보를 저장.
+     */
     @Transactional
     public String ownerSignUp(SignUpForm form) {
         if (isEmailExist(form.getEmail())) {
@@ -32,18 +37,27 @@ public class OwnerSignUpService {
         }
     }
 
+
+    /**
+     * 회원 가입 저장
+     */
+    public Owner signUp(SignUpForm form) {// 가입
+        return ownerRepository.save(Owner.from(form));
+    }
+    /**
+     * 이메일 유효성 검사
+     */
+    public boolean isEmailExist(String email) {
+        return ownerRepository.findByEmail(email).isPresent();
+    }
+
+    /**
+     * 전화번호 유효성 검사
+     */
     private boolean isValidPhoneNumber(String phone) {
         String regex = "^(01[016-9])-(\\d{3,4})-(\\d{4})$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(phone);
         return matcher.matches();
-    }
-
-    public Owner signUp(SignUpForm form) {// 가입
-        return ownerRepository.save(Owner.from(form));
-    }
-
-    public boolean isEmailExist(String email) {
-        return ownerRepository.findByEmail(email).isPresent();
     }
 }

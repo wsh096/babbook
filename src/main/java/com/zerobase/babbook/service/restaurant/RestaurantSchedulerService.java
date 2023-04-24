@@ -15,8 +15,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-//restaurant의 평균점수를 매일 한 번씩 조회해서 만들어줌.
 
+/**
+ * restaurant 평점을 업데이트 해주는 스케쥴러 서비스로
+ * review 작성이 완료된 restaurant 의 평균을 repository 에서 db에서 만들어
+ * 해당 값을 저장해주는 역할 매일 0시 마다 실행 되며
+ * ?는 cron 표현식에서 일(day of the month) 필드를 의미하며, 이 경우 매일을 의미
+ */
 @Service
 @RequiredArgsConstructor
 public class RestaurantSchedulerService {
