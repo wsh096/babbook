@@ -13,8 +13,8 @@
     
     버전정보 : Spring 2.7.10. Gradle 7.6.1.
    
-    USE : Lombok, Spring Web, OpenFeign, springdoc(Swgager)
-          validation
+    USE : Lombok, Spring Web, OpenFeign, pringdoc(Swagger)
+          Validation, jjwt(JWT 토큰)
           Spring Data JDBC, Spring Data JPA, H2, MariaDB.
 ### ProjectImage
 ![img_1.png](img_1.png)
