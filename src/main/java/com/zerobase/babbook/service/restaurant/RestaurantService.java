@@ -110,7 +110,7 @@ public class RestaurantService {
      * 다르다는 것으로 표시가 가능.
      */
     @Transactional
-    public String updateRestaurant(String token, RestaurantForm form) {
+    public String updateRestaurant(String token, RestaurantForm form,Long restaurantId) {
         if(!provider.validateToken(token)){
             throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
         }
@@ -118,16 +118,32 @@ public class RestaurantService {
         Owner owner = ownerRepository.findById(ownerCheck.getId())
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OWNER));
 
+        if(!isValidBusinessNumber(form.getBusinessNumber())){
+            throw new CustomException(ErrorCode.DO_NOT_VALID_BUSINESS_NUMBER);
+        }
         Restaurant restaurant = restaurantRepository
             .findByBusinessNumber(form.getBusinessNumber())
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_CORRECT_BUSINESSNUMBER));
-
-        Restaurant check = restaurantRepository.findByOwner(owner)
+        /**
+         * 수정하고자 하는 식당의 넘버도 유효한지 확인합니다.
+         */
+        Restaurant wantToModify = restaurantRepository.findById(restaurantId)
+            .orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT));
+        /**
+         * 여러 식당을 가지고 있기 때문에 자신이 수정하고자하는 식당과 일치해야 합니다.
+         */
+        if(!Objects.equals(form.getBusinessNumber(), wantToModify.getBusinessNumber())){
+            throw new CustomException(ErrorCode.DO_NOT_MATCH_RESTAURANT);
+        }
+        /**
+         * 수정하는 사업자 역시 일치해야 합니다.
+         */
+        Restaurant checkOwner = restaurantRepository.findByOwner(owner)
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OWNER));
         /**
          * 2개의 restaurant이 다른 상태라면 수정을 하면 안 됨.
          */
-        if (restaurant!=check) {//불일치
+        if (restaurant != checkOwner) {//불일치
             throw new CustomException(ErrorCode.DO_NOT_CORRECT_ACCESS);
         } else {
             update(form);
@@ -138,13 +154,13 @@ public class RestaurantService {
     /**
      * 레스토랑 업데이트
      */
-    private Restaurant update(RestaurantForm form) {
+    private void update(RestaurantForm form) {
         Restaurant restaurant =
             restaurantRepository.findByBusinessNumber(form.getBusinessNumber()).get();
         restaurant.setName(form.getName());
         restaurant.setDescription(form.getDescription());
         restaurant.setAddress(form.getAddress());
-        return restaurantRepository.save(restaurant);
+        restaurantRepository.save(restaurant);
     }
 
     /**
@@ -162,6 +178,10 @@ public class RestaurantService {
         Restaurant restaurant = restaurantRepository
             .findById(restaurantId)
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESTAURANT));
+
+        if(!isValidBusinessNumber(restaurant.getBusinessNumber())){
+            throw new CustomException(ErrorCode.DO_NOT_VALID_BUSINESS_NUMBER);
+        }
 
         String name = restaurant.getName();
         /**

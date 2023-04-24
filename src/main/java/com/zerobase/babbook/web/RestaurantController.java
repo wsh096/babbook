@@ -58,10 +58,11 @@ public class RestaurantController {
     /**
      * restaurant 수정 API
      */
-    @PutMapping("/modify")
+    @PutMapping("/modify/{restaurant_id}")
     public ResponseEntity<?> updateRestaurant(@RequestHeader(name = TOKEN) String token,
-        @RequestBody RestaurantForm form) {
-        return ResponseEntity.ok(restaurantService.updateRestaurant(token, form));
+        @RequestBody RestaurantForm form,
+        @PathVariable(name = "restaurant_id") Long restaurantId) {
+        return ResponseEntity.ok(restaurantService.updateRestaurant(token, form, restaurantId));
     }
     /**
      * restaurant 삭제 API

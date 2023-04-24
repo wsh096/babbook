@@ -32,6 +32,7 @@ public enum ErrorCode {
     NOT_CORRECT_BUSINESSNUMBER(HttpStatus.BAD_REQUEST, "사업자 번호가 일치하지 않습니다. 사업자 번호를 확인해 주십시오."),
     ALREADY_REGISTER_BUSINESSNUMBER(HttpStatus.BAD_REQUEST,"이미 등록된 사업자 번호입니다. 사업자 번호를 다시 한 번 확인해 주십시오."),
     DO_NOT_CORRECT_ACCESS(HttpStatus.BAD_REQUEST, "등록하신 분이 아닙니다. 비정상적인 접근입니다."),
+    DO_NOT_MATCH_RESTAURANT(HttpStatus.BAD_REQUEST, "수정하고자 하는 식당이 아닙니다. 다시 한 번 확인해 주세요."),
     DO_NOT_VALID_BUSINESS_NUMBER(HttpStatus.BAD_REQUEST, "사업자 번호 형식이 잘못 되었습니다. 000-00-00000 형식으로 작성해 주세요."),
 
 

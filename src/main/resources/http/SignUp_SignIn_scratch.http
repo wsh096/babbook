@@ -3,10 +3,10 @@ POST http://localhost:8080/signup/user
 Content-Type: application/json
 
 {
-  "email": "testUser@gmail.com",
+  "email": "testqser@gmail.com",
   "password": "0000",
   "name": "사용자",
-  "phone": "018-0000-0002"
+  "phone": "018-0000-000"
 }
 
 

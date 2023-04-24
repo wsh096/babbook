@@ -59,9 +59,7 @@ public class Restaurant extends BaseEntity {
     private String businessNumber;
     private String address;
     private String phone;
-    @Column(columnDefinition = "DOUBLE DEFAULT 0.0")
-    private Double averageRate;//리뷰에 의해서 (하루 한 번) 값 자동 변경
-    //변경 사항이 없으면 넘어가는 방식으로 redis 활용 가능해 보임.
+    private Double averageRate;
 
     public static Restaurant of(RestaurantForm form, Owner owner) {
         return Restaurant.builder()
@@ -71,6 +69,7 @@ public class Restaurant extends BaseEntity {
             .address(form.getAddress())
             .phone(form.getPhone())
             .owner(owner)
+            .averageRate(0.0)
             .build();
     }
 }

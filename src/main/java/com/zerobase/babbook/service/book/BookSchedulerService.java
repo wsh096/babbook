@@ -30,7 +30,7 @@ public class BookSchedulerService {
     }
 
     @Transactional
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedRate = 300000)//5분마다 확인
     public void updateBookCode() {
         LocalDateTime now = LocalDateTime.now();
         List<Book> books = bookRepository.findByDeadLineTimeBeforeAndStatusCodeNot(now,

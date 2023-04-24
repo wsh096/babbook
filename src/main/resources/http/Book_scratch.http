@@ -11,9 +11,9 @@ Content-Type: application/json
 
 
 ### user_Book_Cancel
-POST http://localhost:8080/book/cancel/3
+POST http://localhost:8080/book/cancel/2
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI2ODcxMCwiZXhwIjoxNjgyMzU1MTEwfQ.4fKdzhATiwVNniNN8KP8WF7J5dNuYg_e5iVNWdDE5Nk
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjMzNTM4NiwiZXhwIjoxNjgyNDIxNzg2fQ.VDBBtdU65N8Ztf0AVhdfcy_S7xEQu9dOCXlQ2IRIkwo
 
 
 ### user_Request_book_ToRestaurant
@@ -22,13 +22,13 @@ Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI3Mzk0MywiZXhwIjoxNjgyMzYwMzQzfQ.H5yBGRPrzx_mtGAC0l1z2e4i2Eepo9hRu_wMAIFGPuI
 
 {
-  "bookTime": "2023-05-25T15:00:32"
+  "bookTime": "2023-04-24T21:30:00"
 }
 
 
 ### owner_Response_book_ToUser
-POST http://localhost:8080/book/response/2
+POST http://localhost:8080/book/response/3
 Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIyNjg3NjQsImV4cCI6MTY4MjM1NTE2NH0.GGMmqYEcGcp1S8-xdkhAFiqdxUJV7rNMz8evjP2Y4RM
 
-  "승인"
+  "거절"

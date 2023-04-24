@@ -7,14 +7,14 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM0
 
 ### get_Review_Detail
 
-GET http://localhost:8080/review/my/1
+GET http://localhost:8080/review/my/2
 Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI3NDQxNCwiZXhwIjoxNjgyMzYwODE0fQ.2bOu2LohGq74CwIjGrBBAuqA8dtR9T-Sqsqe97Y9hr4
 
 
 ### add_Review
 
-POST http://localhost:8080/review/add?bookId=2
+POST http://localhost:8080/review/add?bookId=5
 Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI3NDQxNCwiZXhwIjoxNjgyMzYwODE0fQ.2bOu2LohGq74CwIjGrBBAuqA8dtR9T-Sqsqe97Y9hr4
 
@@ -23,3 +23,12 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM0
   "description": "말이 필요 없습니다. 또 갈 겁니다.",
   "rate": 10
 }
+### get_Book_Detail(check reviewstatus)
+
+GET http://localhost:8080/book/find/1
+Content-Type: application/json
+
+### get_Detail_Restaurnat(check avgrate)
+
+GET http://localhost:8080/restaurant/detail/1
+Content-Type: application/json

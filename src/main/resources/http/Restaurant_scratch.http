@@ -12,7 +12,7 @@ Content-Type: application/json; charset=UTF-8
 
 ### get_Detail_Restaurnat
 
-GET http://localhost:8080/restaurant/detail/1
+GET http://localhost:8080/restaurant/detail/5
 Content-Type: application/json
 
 
@@ -20,13 +20,13 @@ Content-Type: application/json
 
 POST http://localhost:8080/restaurant/add
 Content-Type: application/json; charset=UTF-8
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIyOTM2MDMsImV4cCI6MTY4MjM4MDAwM30.R9vUAeZRmE2J5eT5PqgARJlvO2PfigJOGMibRqpISVw
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIzMzUzNzMsImV4cCI6MTY4MjQyMTc3M30.hHCOvMdYfolPRXXyphrmCd8nrAl5gi49OVjm9ZR3T4c
 
 
 {
-  "name": "최고의 맛집",
+  "name": "최고 맛집",
   "description": "맛있습니다.",
-  "businessNumber": "000-00-00000",
+  "businessNumber": "000-00-00001",
   "address": "대한민국 서울시 관악구 신림동",
   "phone": "02-318-5512"
 }
@@ -35,13 +35,13 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2
 ### modify_Restaurant
 
 PUT http://localhost:8080/restaurant/modify
-Content-Type: application/json; charset=UTF-8
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIyNjg3NjQsImV4cCI6MTY4MjM1NTE2NH0.GGMmqYEcGcp1S8-xdkhAFiqdxUJV7rNMz8evjP2Y4RM
+Content-Type: application/json;charset=UTF-8
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIzMzUzNzMsImV4cCI6MTY4MjQyMTc3M30.hHCOvMdYfolPRXXyphrmCd8nrAl5gi49OVjm9ZR3T4c
 
 {
-  "name": "최고의 맛집",
+  "name": "최고 맛집",
   "description": "주소가 바꼈습니다.^^",
-  "businessNumber": "000-00-00001",
+  "businessNumber": "000-00-00002",
   "address": "대한민국 서울시 관악구 신림동 0000-01",
   "phone": "02-318-5512"
 }
