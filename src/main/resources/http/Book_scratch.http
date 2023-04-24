@@ -22,13 +22,13 @@ Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI3Mzk0MywiZXhwIjoxNjgyMzYwMzQzfQ.H5yBGRPrzx_mtGAC0l1z2e4i2Eepo9hRu_wMAIFGPuI
 
 {
-  "bookTime": "2023-04-24T21:30:00"
+  "bookTime": "2023-04-24T21:44:50"
 }
 
 
 ### owner_Response_book_ToUser
-POST http://localhost:8080/book/response/3
+POST http://localhost:8080/book/response/8
 Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIalpjODdFT1ZqOWROUTByUGxzdUhjYlJ0a2Q3RjZWRVpvaTB5cjQwNmRNPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE2ODIyNjg3NjQsImV4cCI6MTY4MjM1NTE2NH0.GGMmqYEcGcp1S8-xdkhAFiqdxUJV7rNMz8evjP2Y4RM
 
-  "거절"
+  "승인"

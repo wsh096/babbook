@@ -1,10 +1,10 @@
 ### user_Kiosk_Check
 
-POST http://localhost:8080/kiosk/check/2
+POST http://localhost:8080/kiosk/check/8
 Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI3Mzk0MywiZXhwIjoxNjgyMzYwMzQzfQ.H5yBGRPrzx_mtGAC0l1z2e4i2Eepo9hRu_wMAIFGPuI
 
 ### get_Book_Detail(check here)
 
-GET http://localhost:8080/book/find/1
+GET http://localhost:8080/book/find/8
 Content-Type: application/json

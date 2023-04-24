@@ -7,14 +7,14 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM0
 
 ### get_Review_Detail
 
-GET http://localhost:8080/review/my/2
+GET http://localhost:8080/review/my/
 Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI3NDQxNCwiZXhwIjoxNjgyMzYwODE0fQ.2bOu2LohGq74CwIjGrBBAuqA8dtR9T-Sqsqe97Y9hr4
 
 
 ### add_Review
 
-POST http://localhost:8080/review/add?bookId=5
+POST http://localhost:8080/review/add?bookId=7
 Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM08xMTZZTkdrbkpsckdpZlJrPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4MjI3NDQxNCwiZXhwIjoxNjgyMzYwODE0fQ.2bOu2LohGq74CwIjGrBBAuqA8dtR9T-Sqsqe97Y9hr4
 
@@ -25,7 +25,7 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldUxqVlJKSzhrcTV2OXJQdnowbjNRLzRRM0
 }
 ### get_Book_Detail(check reviewstatus)
 
-GET http://localhost:8080/book/find/1
+GET http://localhost:8080/book/find/7
 Content-Type: application/json
 
 ### get_Detail_Restaurnat(check avgrate)
