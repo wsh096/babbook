@@ -28,6 +28,9 @@ public class RestaurantService {
 
     //레스토랑 추가
     public String addRestaurant(String token, RestaurantForm form) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         UserDto owner = provider.getUserDto(token);
         ownerRepository.findById(owner.getId())
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OWNER));
@@ -63,6 +66,9 @@ public class RestaurantService {
     //레스토랑 업데이트
     @Transactional
     public String updateRestaurant(String token, RestaurantForm form) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         UserDto ownerCheck = provider.getUserDto(token);
         Owner owner = ownerRepository.findById(ownerCheck.getId())
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OWNER));
@@ -93,6 +99,9 @@ public class RestaurantService {
 
     //레스토랑 삭제
     public String delete(String token, Long restaurantId) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         UserDto ownerCheck = provider.getUserDto(token);
 
         Owner owner = ownerRepository.findById(ownerCheck.getId())

@@ -20,7 +20,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+/**
+ * 연관관계 설명.
+ * Owner(ManyToOne), book(OneToMany), review(OneToMany)
+ * 사업자 번호의 경우도 휴대폰 번호처럼 정규식으로 000-00-00000으로 둠.
+ * 추후, 해당 값이 아니면 에러 발생하게 ErrorCode 작성.
+ *
+ * 메서드
+ * public static Restaurant of(RestaurantForm form, Owner owner)
+ * RestaurantForm 과 Owner 객체를 인자로 받아
+ * 새로운 Restaurant 객체를 생성하고 반환
+ * RestaurantForm 에서 받아온
+ * name, businessNumber, description, address, phone 의 정보 가져와 반환
+ */
 @Getter
 @Setter
 @Entity
@@ -37,7 +49,7 @@ public class Restaurant extends BaseEntity {
     private Owner owner;
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Book> books;
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Review> reviews;
     private String name;
     @Column(length = 500)

@@ -10,6 +10,23 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * JwtAuthenticationProvider 클래스는 JWT 토큰을 생성하고 유효성 검증,
+ * 토큰에서 유저 정보를 추출하는 기능을 제공하는 클래스
+ *
+ *메서드
+ * createToken
+ * 파라미터로 전달된 이메일, 아이디, 권한 정보를 이용하여 JWT 토큰을 생성
+ * 생성된 토큰에 payload(Claim) 로 이메일, 아이디, 권한 정보 포함
+ *
+ * validateToken
+ * 전달된 JWT 토큰이 유효한지 검증
+ * 유효하지 않은 경우 false , 유효한 경우 true 반환.
+ *
+ * getUserDto
+ * 전달된 JWT 토큰에서 유저 정보를 추출하여 UserDto 객체로 반환
+ * 추출된 정보는 이메일, 아이디 추출시에는 복호화해 정보 추출
+ */
 public class JwtAuthenticationProvider {
 
     private final String secretKey = "secretKey";

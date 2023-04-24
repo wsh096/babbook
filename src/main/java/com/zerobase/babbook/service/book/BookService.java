@@ -37,6 +37,9 @@ public class BookService {
     //예약생성
     @Transactional
     public String requestBook(String token, Long restaurantId, BookForm form) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         UserDto userCheck = provider.getUserDto(token);
 
         User user = userRepository.findById(userCheck.getId())
@@ -84,6 +87,9 @@ public class BookService {
 
     @Transactional
     public String responseBook(String token, Long bookId, OwnerAdmit ownerAdmit) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         UserDto ownerCheck = provider.getUserDto(token);
         Owner owner = ownerRepository.findById(ownerCheck.getId())
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_OWNER));
@@ -126,6 +132,9 @@ public class BookService {
 
     @Transactional
     public String cancelBook(String token, Long bookId) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         UserDto userDto = provider.getUserDto(token);
         User user = userRepository.findById(userDto.getId())
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));

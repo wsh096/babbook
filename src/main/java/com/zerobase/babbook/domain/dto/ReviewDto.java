@@ -9,16 +9,19 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 리뷰 정보를 담은 Review 엔티티로 데이터 조회를 위해 사용하는 DTO 클래스 String title: 리뷰 제목 String description: 리뷰 설명
+ * double rate: 리뷰 평점
+ * <p>
+ * ReviewDto 클래스 내의 메소드 public static ReviewDto from(Review review) Review 엔티티를 통해 ReviewDto 객체를 생성
+ * <p>
+ * public static List<ReviewDto> fromList(List<Review> reviews) Review 엔티티 리스트를 이용하여 ReviewDto 객체
+ * 리스트 생성 이때 최대 1000개까지만 가져오게 제한.
+ */
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-/*
- * 해당 부분은 데이터를 가지고 조회하는 용도로 사용.
- * 구체적인 데이터에서 이름, 설명, 주소, 번호만 보이면 되기 때문에, 해당 부분만 구현
- *
- * 리스트 페이지는 적은 데이터만 가져오면 되기 때문에 null 값이 들어가는 형태가 되긴 하지만 List 로 만들어 구현
- * */
 public class ReviewDto {
 
 
@@ -26,9 +29,6 @@ public class ReviewDto {
     private String description;
     private double rate;
 
-
-    //해당 부분은 데이터를 가지고 조회하는 용도로 사용.
-//구체적인 데이터에서 이름, 설RestaurantDto명, 주소, 번호만 보이면 되기 때문에, 해당 부분만 구현
     public static ReviewDto from(Review review) {
 
         return ReviewDto.builder()
@@ -38,11 +38,10 @@ public class ReviewDto {
             .build();
     }
 
-    //리스트 페이지는 적은 데이터만 가져오면 되기 때문에 null 값이 들어가는 형태가 되긴 하지만 List 로 만들어 구현
     public static List<ReviewDto> fromList(List<Review> reviews) {
         List<ReviewDto> restaurantList = new ArrayList<>();
-        //우선 최대 1000개까지만 너무 많은 데이터가 들어가지 않게//이후 페이지 처리 부분 만들어 해결하기.
-        int size = Math.min(1000, reviews.size());
+
+        int size = Math.min(1000, reviews.size());//임의제한
         for (int i = 0; i < size; i++) {
             Review review = reviews.get(i);
             ReviewDto eachRestaurantDto = ReviewDto.builder()

@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+/**
+ * 사용자와 점주 로그인 담당 API 컨트롤러
+ * '/signin/user'와 '/signin/owner' 엔드포인트를 통해 사용자와 점주 로그인에 필요한 정보를 전달
+ *  각각의 서비스 클래스 호출해 로그인 수행.
+ *  로그인 성공시 '200 OK' 응답을 반환
+ */
 
 @RestController
 @RequiredArgsConstructor

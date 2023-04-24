@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+/**
+ * user, owner 가 가입 할 때 공통으로 사용하는 값이 있는 form
+ */
 @Getter
 @Builder
 @NoArgsConstructor

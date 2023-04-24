@@ -1,8 +1,5 @@
 package com.zerobase.babbook.domain.entity;
 
-import com.zerobase.babbook.domain.form.ReviewForm;
-import com.zerobase.babbook.exception.CustomException;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +15,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 리뷰 테이블에 관한 엔티티 클래스 Book과는 1대1, Restaurant 및 User와는 다대일 연관관계 매핑
+ * Review는 제목, 설명, 별점을 가집니다.
+ * (0~5까지의 0.5점 단위로 단위로 0~10까지의 정수 값을 입력함에 따라 해당 형태로 변환합니다.)
+ */
 @Getter
 @Setter
 @Entity
@@ -42,4 +44,4 @@ public class Review extends BaseEntity {
     private String description;
     private double rate;
 
-    }
+}

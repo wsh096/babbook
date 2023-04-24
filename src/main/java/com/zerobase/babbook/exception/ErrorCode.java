@@ -4,11 +4,23 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+/**
+ * 서비스에서 발생할 수 있는 여러 가지 예외 상황에 대한 에러 코드
+ * 종류 별로 jwtToken 검증
+ * SignUp,SignIn 관련
+ * 식당 관련
+ * 예약 관련(가장 많음)
+ * 키오스크 관련
+ * 리뷰 관련 예외가 있음
+ */
 @RequiredArgsConstructor
 @Getter
 public enum ErrorCode {
 
-    //login_logout(User(사용자), Owner(점주))
+    //jwtToken 유효성 검사
+    DO_NOT_RIGHT_TOKEN(HttpStatus.BAD_REQUEST,"토큰이 유효하지 않습니다."),
+
+    //SignUp,SignIn(User(사용자), Owner(점주))
     NOT_FOUND_USER(HttpStatus.BAD_REQUEST, "존재하지 않는 유저입니다."),
     NOT_FOUND_OWNER(HttpStatus.BAD_REQUEST, "존재하지 않는 사업자입니다."),
     ALREADY_REGISTER_USER(HttpStatus.BAD_REQUEST, "이미 등록된 메일입니다. 다른 메일로 시도해 주세요."),
@@ -44,8 +56,6 @@ public enum ErrorCode {
 
 
     //Kiosk
-    //조회에서 필요하지 않은 이유는 따로, 해당 내역을 조회한다고 해서 의미가 있는 게 아니기 때문.
-
     NO_ACCEPT_BOOK(HttpStatus.BAD_REQUEST, "아직 승인되지 않은 예약은 사용할 수 없습니다."),
     NO_USE_BOOK(HttpStatus.BAD_REQUEST, "해당 예약은 사용되었거나 취소되었기에 사용할 수 없습니다."),
 

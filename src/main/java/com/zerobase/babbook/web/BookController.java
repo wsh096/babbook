@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 예약 관련 API
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/book")
@@ -22,22 +25,25 @@ public class BookController {
     private final String TOKEN = "X-AUTH-TOKEN";
     private final BookService bookService;
 
-    //유저의 예약 내역 확인
-    // userController에 넣을지, 예약 내역에 넣어야 할지 참 애매한 상황.
-    // common으로 따로 빼는 것도 고려(MainPage에 조회 검색, 유저의 예약 내역 확인과 같은 페이지 만들
-
-    //예약 조회
+    /**
+     * 예약 내역 상세 조회 API
+     */
     @GetMapping("/find/{book_id}")
     public ResponseEntity<?> getBookDetail(@PathVariable(name = "book_id") Long bookId) {
         return ResponseEntity.ok().body(bookService.getBookDetail(bookId));
     }
 
+    /**
+     * 내가 보낸 예약 내역 전체 리스트 출력 API
+     */
     @GetMapping("/list")
     public ResponseEntity<?> myBookList(@RequestHeader(name = TOKEN) String token) {
         return ResponseEntity.ok().body(bookService.mybookList(token));
     }
 
-    //예약 요청 전송(request)
+    /**
+     * 유저 -> 점주 예약 요청 전송(request) API
+     */
     @PostMapping("/request/{restaurant_id}")
     public ResponseEntity<?> requestBook(@RequestHeader(name = TOKEN) String token,
         @PathVariable(name = "restaurant_id") Long restaurantId,
@@ -45,16 +51,18 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.requestBook(token, restaurantId, form));
     }
 
-    //예약 요청 응답(response)
-    //owner token 으로 확인_owner 토큰인지는 service 에서 확인
-    // (아무나 처리 가능하면 안 되기 때문.)
+    /**
+     * 점주 -> 유저 예약 응답 전송(response) API
+     */
     @PostMapping("/response/{book_id}")
     public ResponseEntity<?> getBook(@RequestHeader(name = TOKEN) String token,
         @PathVariable(name = "book_id") Long bookId, @RequestBody OwnerAdmit ownerAdmit) {
         return ResponseEntity.ok().body(bookService.responseBook(token, bookId, ownerAdmit));
     }
 
-    //유저의 예약 취소.USER_CANCEL_BOOK("유저 예약 취소"),
+    /**
+     * 유저가 스스로 예약 취소 API
+     */
     @PostMapping("/cancel/{book_id}")
     public ResponseEntity<?> cancelBook(@RequestHeader(name = TOKEN) String token,
         @PathVariable(name = "book_id") Long bookId) {

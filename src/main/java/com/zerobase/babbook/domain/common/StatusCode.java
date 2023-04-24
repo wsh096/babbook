@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 가장 핵심이 되는 enum.
+ * 해당 값을 review 등으로 나눌 수도 있지만,
+ * 하나로 통합해 관리.
+ * 예약의 진행 상황과 review 가능 여부 등이 담겨 있음.
+ */
 @Getter
 @RequiredArgsConstructor
 public enum StatusCode implements EnumMapperType {

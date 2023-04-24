@@ -6,6 +6,11 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import org.apache.tomcat.util.codec.binary.Base64;
 
+/**
+ * Aes256Utils 클래스는 AES256 알고리즘 사용
+ * 문자열을 암호화하거나 복호화하는 유틸리티 클래스
+ * IV와 KEY 값 고정, 암호화한 문자열은 Base64 인코딩해 반환.
+ */
 public class Aes256Utils {
     public static String alg = "AES/CBC/PKCS5Padding";
     private static final String KEY = "ZEROBASEKEYISZEROBASEKEY";

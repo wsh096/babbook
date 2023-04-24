@@ -1,4 +1,4 @@
-package com.zerobase.babbook.service;
+package com.zerobase.babbook.service.kiosk;
 
 import com.zerobase.babbook.domain.common.StatusCode;
 import com.zerobase.babbook.domain.dto.UserDto;
@@ -24,6 +24,9 @@ public class KioskService {
 
     @Transactional
     public String checkBook(String token, Long bookId) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         UserDto userDto = provider.getUserDto(token);
 
         User user = userRepository.findById(userDto.getId())

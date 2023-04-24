@@ -29,6 +29,9 @@ public class ReviewService {
 
     //조회
     public List<ReviewDto> MyReviewList(String token) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         UserDto userDto = provider.getUserDto(token);
         User user = userRepository.findById(userDto.getId())
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
@@ -36,11 +39,17 @@ public class ReviewService {
     }
 
     public ReviewDto getReviewDetail(String token,Long reviewId) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         return ReviewDto.from(reviewRepository.findById(reviewId)
             .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_REVIEW)));
     }
     @Transactional
     public String addReview(String token, ReviewForm form, long bookId) {
+        if(!provider.validateToken(token)){
+            throw new CustomException(ErrorCode.DO_NOT_RIGHT_TOKEN);
+        }
         UserDto userDto = provider.getUserDto(token);
         User user = userRepository.findById(userDto.getId()).orElseThrow(
             () -> new CustomException(ErrorCode.NOT_FOUND_USER)

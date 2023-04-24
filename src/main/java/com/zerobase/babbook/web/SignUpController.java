@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 사용자와 점주 회원가입 담당 API 컨트롤러
+ * '/signup/user'와 '/signup/owner' 엔드포인트를 통해 사용자와 점주 회원가입에 필요한 정보를 전달
+ *  각각의 서비스 클래스 호출해 회원가입 수행.
+ *  회원가입이 성공시 '200 OK' 응답을 반환
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/signup")

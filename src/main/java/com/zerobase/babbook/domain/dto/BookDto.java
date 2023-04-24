@@ -10,11 +10,20 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Long bookId: Book 엔티티의 식별자인 bookId String restaurantName: 예약이 이루어진 식당의 이름 String deadLineTime: 예약
+ * 마감 시간 StatusCode statusCode: 예약의 상태를 나타내는 열거형 타입 StatusCode
+ * <p>
+ * BookDto 클래스 내의 메소드
+ * <p>
+ * public static BookDto from(Book book) BookDto 객체를 Book 엔티티에서 생성.
+ * <p>
+ * public static List<BookDto> myBookList(List<Book> books) BookDto 객체 리스트를 Book 엔티티 리스트에 생성.
+ */
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class BookDto {
 
     private Long bookId;
@@ -23,22 +32,20 @@ public class BookDto {
     private StatusCode statusCode;
 
     public static BookDto from(Book book) {
-        //deadLineTime 이 예약 결정의 판가름
+
         return BookDto.builder()
             .bookId(book.getId())
             .restaurantName(book.getRestaurant().getName())
-            .deadLineTime(book.getDeadLineTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+            .deadLineTime(
+                book.getDeadLineTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
             .statusCode(book.getStatusCode())
             .build();
     }
 
-    //리스트 페이지는 적은 데이터만 가져오면 되기 때문에 null 값이 들어가는 형태가 되긴 하지만 List 로 만들어 구현
     public static List<BookDto> myBookList(List<Book> books) {
 
         List<BookDto> myBookList = new ArrayList<>();
 
-        //우선 최대 1000개까지만 너무 많은 데이터가 들어가지 않게
-        // 이후 페이지 처리 부분 만들어 해결하기.
         int size = Math.min(1000, books.size());
         for (int i = 0; i < size; i++) {
             Book eachBook = books.get(i);

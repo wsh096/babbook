@@ -9,7 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-
+/**
+ * kiosk에 관한 엔티티로 book과 다대일 관계.
+ * 해당 값이 실제 사용할 때 조회하는 지연 로딩 사용.
+ * */
 @Getter
 @Setter
 @Entity
