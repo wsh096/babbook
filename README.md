@@ -17,7 +17,7 @@
           Validation, jjwt(JWT 토큰)
           Spring Data JDBC, Spring Data JPA, H2, MariaDB.
 ### ProjectImage
-![img_1.png](img_1.png)
+![img_1.png](기술과제%20스크래치%20파일%20및%20이미지%20파일/img_1.png)
 ## 공통
 - [x] 예외 메시지 처리
 - [x] 둘러보기(전체 음식점 리스트가 보임) (기본과제)
@@ -54,7 +54,7 @@
 - [x] Swagger 를 통한 확인
 
 ## ERD 이미지(연관관계매핑)
-![img_2.png](img_2.png)
+![img_2.png](기술과제%20스크래치%20파일%20및%20이미지%20파일/img_2.png)
 
 ## 스크래치 파일을 통한 결과 확인
 1. 회원 가입.
