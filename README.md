@@ -54,4 +54,4 @@
 - [x] Swagger 를 통한 확인
 
 ## ERD 이미지
-![img.png](img.png)
+![img_2.png](img_2.png)!
